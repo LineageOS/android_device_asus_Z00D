@@ -15,7 +15,13 @@
 #
 
 TARGET_ARCH := x86
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 TARGET_ARCH_VARIANT := silvermont
+else
+ifneq ($(filter A500CG A600CG A400CG,$(TARGET_DEVICE)),)
+TARGET_ARCH_VARIANT := atom
+endif
+endif
 TARGET_CPU_ABI := x86
 TARGET_CPU_ABI2 := armeabi-v7a
 TARGET_CPU_ABI_LIST := x86,armeabi-v7a,armeabi
