@@ -1,0 +1,11 @@
+on init
+    # Property set by AudioHAL to expose the routing status of VTSV use case to VTSV HAL
+    setprop AudioComms.vtsv.routed false
+
+on post-fs
+    # Defer loading modules that may require firmware till fs is ready
+
+    # Give system access rights to vibrator
+    chown system system /sys/devices/pci0000:00/0000:00:17.0/vibrator
+    chown system system /sys/devices/pci0000:00/0000:00:17.0/pwm_baseunit
+    chown system system /sys/devices/pci0000:00/0000:00:17.0/pwm_ontime_div
