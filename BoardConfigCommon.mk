@@ -27,8 +27,15 @@ TARGET_CPU_ABI2 := armeabi-v7a
 TARGET_CPU_ABI_LIST := x86,armeabi-v7a,armeabi
 TARGET_CPU_ABI_LIST_32_BIT := x86,armeabi-v7a,armeabi
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := x86_64-linux-android-
+ifneq ($(filter A500CG A600CG A400CG,$(TARGET_DEVICE)),)
+TARGET_BOARD_PLATFORM := clovertrail
+TARGET_BOOTLOADER_BOARD_NAME := clovertrail
+else
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 TARGET_BOARD_PLATFORM := moorefield
 TARGET_BOOTLOADER_BOARD_NAME := moorefield
+endif
+endif
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
