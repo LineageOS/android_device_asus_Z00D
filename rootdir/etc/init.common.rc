@@ -1,6 +1,6 @@
 import /init.watchdog.rc
 import /init.firmware.rc
-import /init.power.mofd_v1.rc
+import /init.power.${ro.hardware}.rc
 import /init.zram.rc
 
 on early-init
@@ -62,7 +62,7 @@ on fs
     mkdir /factory 0775 system system
     mkdir /config 0775 system system
     mkdir /media 0775 media media
-    mount_all /fstab.mofd_v1
+    mount_all /fstab.${ro.hardware}
     chown root system /factory
     chmod 0770 /factory
     mkdir /config/wifi
