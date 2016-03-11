@@ -242,4 +242,4 @@ endif
 endif
 
 # Use the non-open-source parts, if they're present
--include vendor/asus/mofd-common/BoardConfigVendor.mk
+$(call inherit-product-if-exists,  vendor/asus/mofd-common/BoardConfigVendor.mk)
