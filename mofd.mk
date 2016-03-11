@@ -246,6 +246,12 @@ PRODUCT_PACKAGES += \
     thermald \
     ueventd.$(REF_PRODUCT_NAME).rc
 
+ifneq ($(filter A500CG A600CG,$(TARGET_DEVICE)),)
+PRODUCT_PACKAGES += \
+    init.compass.rc \
+    init.wireless.rc
+endif
+
 # Sensors
 PRODUCT_PACKAGES += \
     libshim_sensors
