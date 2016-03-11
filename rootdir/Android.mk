@@ -136,6 +136,7 @@ LOCAL_SRC_FILES    := etc/init.mofd_v1.rc
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.nfc.rc
 LOCAL_MODULE_TAGS  := optional eng
@@ -143,6 +144,7 @@ LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := etc/init.nfc.rc
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
+endif # mofd-common Z00A Z008
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.platform.usb.rc
