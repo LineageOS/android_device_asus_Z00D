@@ -114,11 +114,11 @@ PRODUCT_COPY_FILES += \
 
 # Keystore
 PRODUCT_PACKAGES += \
-    keystore.moorefield
+    keystore.$(TARGET_BOARD_PLATFORM)
 
 # Lights
 PRODUCT_PACKAGES += \
-    lights.moorefield
+    lights.$(TARGET_BOARD_PLATFORM)
 
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
