@@ -84,12 +84,19 @@ endif
 PRODUCT_PACKAGES += \
     libshim_gps
 
+ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/configs/gps.conf:system/etc/gps.conf \
     device/asus/mofd-common/configs/gps.xml:system/etc/gps.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.spid.gps.tty=ttyMFD2
+
+else
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.spid.gps.tty=ttyMFD3
+
+endif
 
 # Houdini (arm native bridge)
 PRODUCT_PROPERTY_OVERRIDES += \
