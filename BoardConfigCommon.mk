@@ -156,8 +156,10 @@ USE_HW_VP8 := true
 
 # Media: DRM Protected Video
 BOARD_WIDEVINE_OEMCRYPTO_LEVEL := 1
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 USE_INTEL_SECURE_AVC := true
 
+endif
 ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 # Settings for the Media SDK library and plug-ins:
 # - USE_MEDIASDK: use Media SDK support or not
