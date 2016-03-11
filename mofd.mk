@@ -189,8 +189,10 @@ PRODUCT_PACKAGES += \
     libOMXVideoEncoderVP8
 
 # Media: libISV
+ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 PRODUCT_PACKAGES += \
     libisv_omx_core
+endif
 
 # PowerHAL
 PRODUCT_PACKAGES += \
