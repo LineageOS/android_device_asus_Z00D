@@ -85,8 +85,10 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 # Hardware
 BOARD_HARDWARE_CLASS := device/asus/mofd-common/cmhw
+endif
 
 # Houdini: enable ARM codegen for x86
 BUILD_ARM_FOR_X86 := true
