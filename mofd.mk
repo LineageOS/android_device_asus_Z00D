@@ -55,7 +55,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Camera
 PRODUCT_PACKAGES += \
     bspcapability \
-    camera.mofd_v1 \
+    camera.$(REF_PRODUCT_NAME) \
     libshim_camera \
     Snap
 
@@ -88,6 +88,7 @@ ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/configs/gps.conf:system/etc/gps.conf \
     device/asus/mofd-common/configs/gps.xml:system/etc/gps.xml
+
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.spid.gps.tty=ttyMFD2
@@ -202,7 +203,7 @@ endif
 
 # PowerHAL
 PRODUCT_PACKAGES += \
-    power.mofd_v1
+    power.$(REF_PRODUCT_NAME)
 
 # Radio
 PRODUCT_PACKAGES += \
@@ -218,7 +219,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     config_init.sh \
-    fstab.mofd_v1 \
+    fstab.$(REF_PRODUCT_NAME) \
     init.avc.rc \
     init.bt.rc \
     init.bt.vendor.rc \
@@ -231,11 +232,11 @@ PRODUCT_PACKAGES += \
     init.gps.rc \
     init.logtool.rc \
     init.modem.rc \
-    init.mofd_v1.rc \
+    init.$(REF_PRODUCT_NAME).rc \
     init.nfc.rc \
     init.platform.usb.rc \
-    init.power.mofd_v1.rc \
-    init.recovery.mofd_v1.rc \
+    init.power.$(REF_PRODUCT_NAME).rc \
+    init.recovery.$(REF_PRODUCT_NAME).rc \
     init.watchdog.rc \
     init.wifi.rc \
     init.wifi.vendor.rc \
@@ -243,7 +244,7 @@ PRODUCT_PACKAGES += \
     intel_prop \
     intel_prop.cfg \
     thermald \
-    ueventd.mofd_v1.rc
+    ueventd.$(REF_PRODUCT_NAME).rc
 
 # Sensors
 PRODUCT_PACKAGES += \
