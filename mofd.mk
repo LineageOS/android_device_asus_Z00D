@@ -131,11 +131,17 @@ PRODUCT_PACKAGES += \
     lights.$(TARGET_BOARD_PLATFORM)
 
 # Media
+ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true \
     ro.com.widevine.cachesize=16777216 \
     media.stagefright.cache-params=10240/20480/15 \
-    media.aac_51_output_enabled=true \
+    media.aac_51_output_enabled=true
+else
+PRODUCT_PROPERTY_OVERRIDES += \
+    drm.service.enabled=true \
+    ro.com.widevine.cachesize=16777216
+endif
 
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/media/media_codecs.xml:system/etc/media_codecs.xml \
