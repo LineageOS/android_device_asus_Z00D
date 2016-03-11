@@ -4,7 +4,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := config_init.sh
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/config_init.sh
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
+LOCAL_SRC_FILES    := etc/config_init-mofd_v1.sh
+else # mofd-common Z00A Z008
+LOCAL_SRC_FILES    := etc/config_init-redhookbay.sh
+endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_OUT_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
@@ -20,7 +24,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.avc.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.avc.rc
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
+LOCAL_SRC_FILES    := etc/init.avc-mofd_v1.rc
+else # mofd-common Z00A Z008
+LOCAL_SRC_FILES    := etc/init.avc-redhookbay.rc
+endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -76,7 +84,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.diag.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.diag.rc
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
+LOCAL_SRC_FILES    := etc/init.diag-mofd_v1.rc
+else # mofd-common Z00A Z008
+LOCAL_SRC_FILES    := etc/init.diag-redhookbay.rc
+endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -108,7 +120,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.modem.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.modem.rc
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
+LOCAL_SRC_FILES    := etc/init.modem-mofd_v1.rc
+else # mofd-common Z00A Z008
+LOCAL_SRC_FILES    := etc/init.modem-redhookbay.rc
+endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
