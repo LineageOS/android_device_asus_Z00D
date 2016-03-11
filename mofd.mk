@@ -176,7 +176,6 @@ PRODUCT_PACKAGES += \
     libmixvbp_h264secure \
     libmixvbp_vc1 \
     libmixvbp_vp8 \
-    libmixvbp_mpeg2 \
     libva_videodecoder \
     libva_videoencoder
 
@@ -185,15 +184,22 @@ PRODUCT_PACKAGES += \
     libwrs_omxil_core_pvwrapped \
     libOMXVideoDecoderH263 \
     libOMXVideoDecoderMPEG4 \
-    libOMXVideoDecoderWMV \
-    libOMXVideoDecoderVP8 \
-    libOMXVideoDecoderMPEG2 \
-    libOMXVideoDecoderVP9HWR \
-    libOMXVideoDecoderVP9Hybrid \
     libOMXVideoEncoderAVC \
-    libOMXVideoEncoderH263 \
-    libOMXVideoEncoderMPEG4 \
+    libOMXVideoDecoderWMV
+
+ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
+PRODUCT_PACKAGES += \
+    libmixvbp_mpeg2 \
+    libOMXVideoDecoderVP8 \
+    libOMXVideoDecoderVP9HWR \
+    libOMXVideoDecoderMPEG2 \
+    libOMXVideoDecoderVP9Hybrid \
     libOMXVideoEncoderVP8
+endif
+
+PRODUCT_PACKAGES += \
+    libOMXVideoEncoderH263 \
+    libOMXVideoEncoderMPEG4
 
 # Media: libISV
 ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
