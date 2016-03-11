@@ -214,7 +214,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := ueventd.$(REF_PRODUCT_NAME).rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 LOCAL_SRC_FILES    := etc/ueventd.mofd_v1.rc
+else # mofd-common Z00A Z008
+LOCAL_SRC_FILES    := etc/ueventd.redhookbay.rc
+endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
