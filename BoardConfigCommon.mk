@@ -104,6 +104,7 @@ TARGET_INTEL_HWCOMPOSER_FORCE_ONLY_ONE_RGB_LAYER := true
 VSYNC_EVENT_PHASE_OFFSET_NS := 7500000
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 BOARD_EGL_CFG := device/asus/mofd-common/configs/egl.cfg
 
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -111,6 +112,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 MAX_EGL_CACHE_ENTRY_SIZE := 65536
 MAX_EGL_CACHE_SIZE := 1048576
+endif
 
 INTEL_VA := true
 BUILD_WITH_FULL_STAGEFRIGHT := true
@@ -129,6 +131,7 @@ TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
 TARGET_INIT_VENDOR_LIB := libinit_mofd
 TARGET_LIBINIT_DEFINES_FILE := device/asus/mofd-common/init/init_mofd.cpp
 
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 # Inline kernel building
 TARGET_KERNEL_SOURCE := kernel/asus/moorefield
 TARGET_KERNEL_ARCH := x86_64
@@ -138,6 +141,7 @@ TARGET_KERNEL_CONFIG := cyanogenmod_zenfone2_defconfig
 # Kernel cmdline
 BOARD_KERNEL_CMDLINE := init=/init pci=noearly loglevel=0 vmalloc=256M androidboot.hardware=mofd_v1 watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxxx:xxxx:xxxx androidboot.serialno=01234567890123456789 snd_pcm.maximum_substreams=8 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on debug_locks=0 n_gsm.mux_base_conf=\"ttyACM0,0 ttyXMM0,1\"
 #BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+endif
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -152,6 +156,7 @@ USE_HW_VP8 := true
 BOARD_WIDEVINE_OEMCRYPTO_LEVEL := 1
 USE_INTEL_SECURE_AVC := true
 
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 # Settings for the Media SDK library and plug-ins:
 # - USE_MEDIASDK: use Media SDK support or not
 # - MFX_IPP: sets IPP library optimization to use
@@ -164,6 +169,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
     persist.intel.isv.vpp = 1 \
     persist.intel.isv.frc = 1
 
+endif
 COMMON_GLOBAL_CFLAGS += -DGFX_BUF_EXT
 
 # Partitions
@@ -195,7 +201,9 @@ BUILD_WITH_CHAABI_SUPPORT := true
 BOARD_SEPOLICY_DIRS += device/asus/mofd-common/sepolicy
 
 # Tap-to-Wake
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:09.2/i2c-7/7-0038/ftsdclickmode"
+endif
 
 # Wifi
 BOARD_WLAN_DEVICE           := bcmdhd

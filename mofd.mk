@@ -75,8 +75,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     pvr_drv_video
 
+ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/powervr.ini:system/etc/powervr.ini
+endif
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -237,9 +239,11 @@ ENABLE_ITUXD := true
 PRODUCT_PACKAGES += \
     ituxd
 
+ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 # IMG graphics
 PRODUCT_PACKAGES += \
     hwcomposer.moorefield
+endif
 
 # pvr
 PRODUCT_PACKAGES += \
@@ -295,10 +299,12 @@ PRODUCT_PACKAGES += \
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
 
+ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 # specific management of sep_policy.conf
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/sep_policy.conf:system/etc/security/sep_policy.conf
 
+endif
 # hardware optimizations
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    dalvik.vm.isa.x86.features=sse4_2,aes_in,popcnt,movbe
