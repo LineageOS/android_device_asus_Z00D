@@ -59,7 +59,14 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/mofd-common/bluetooth
 
 # Bootloader
+ifneq ($(filter A500CG A600CG,$(TARGET_DEVICE)),)
+TARGET_OTA_ASSERT_DEVICE := ASUS_T00F,ASUS_T00G,ASUS_T00J,ASUS_T00J1
+else
+ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 TARGET_OTA_ASSERT_DEVICE := Z00A,Z008
+endif
+endif
+
 ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 # bootstub as 2nd bootloader
 TARGET_BOOTLOADER_IS_2ND := true
