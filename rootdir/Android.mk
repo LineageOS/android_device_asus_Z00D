@@ -226,7 +226,7 @@ endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
-ifneq ($(filter A500CG A600CG,$(TARGET_DEVICE)),)
+ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.wireless.rc
 LOCAL_MODULE_TAGS  := optional eng

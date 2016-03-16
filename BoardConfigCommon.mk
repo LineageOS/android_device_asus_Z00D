@@ -18,7 +18,7 @@ TARGET_ARCH := x86
 ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 TARGET_ARCH_VARIANT := silvermont
 else
-ifneq ($(filter A500CG A600CG A400CG,$(TARGET_DEVICE)),)
+ifneq ($(filter T00F T00G T00I,$(TARGET_DEVICE)),)
 TARGET_ARCH_VARIANT := atom
 endif
 endif
@@ -27,7 +27,7 @@ TARGET_CPU_ABI2 := armeabi-v7a
 TARGET_CPU_ABI_LIST := x86,armeabi-v7a,armeabi
 TARGET_CPU_ABI_LIST_32_BIT := x86,armeabi-v7a,armeabi
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := x86_64-linux-android-
-ifneq ($(filter A500CG A600CG A400CG,$(TARGET_DEVICE)),)
+ifneq ($(filter T00F T00G T00I,$(TARGET_DEVICE)),)
 TARGET_BOARD_PLATFORM := clovertrail
 TARGET_BOOTLOADER_BOARD_NAME := clovertrail
 else
@@ -59,7 +59,7 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/mofd-common/bluetooth
 
 # Bootloader
-ifneq ($(filter A500CG A600CG,$(TARGET_DEVICE)),)
+ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
 TARGET_OTA_ASSERT_DEVICE := ASUS_T00F,ASUS_T00G,ASUS_T00J,ASUS_T00J1
 else
 ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
@@ -231,7 +231,7 @@ WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER        := NL80211
 CONFIG_HS20                 := true
-ifneq ($(filter A500CG A600CG,$(TARGET_DEVICE)),)
+ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
 WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/bcm43362/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_AP    := "/system/etc/firmware/fw_bcmdhd_43362_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA   := "/system/etc/firmware/fw_bcmdhd_43362.bin"
