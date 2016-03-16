@@ -17,7 +17,7 @@ on early-init
     setprop ro.boot.min.cap 0
 
 on init
-    export LD_SHIM_LIBS /system/bin/mmgr|libshim_mmgr.so:/system/bin/gpsd|libshim_gps.so:/system/lib/hw/gps.mofd_v1.so|libshim_gps.so:/system/lib/hw/sensors.mofd_v1.so|libshim_sensors.so:/system/lib/libtcs.so|libshim_tcs.so:/system/lib/libparameter.so|libshim_audio.so:/system/lib/parameter-framework-plugins/Audio/libtinyalsa_custom-subsystem.so|libshim_audio.so:/system/lib/hw/camera.vendor.mofd_v1.so|libshim_camera.so
+    export LD_SHIM_LIBS /system/bin/mmgr|libshim_mmgr.so:/system/bin/gpsd|libshim_gps.so:/system/lib/hw/gps.redhookbay.so|libshim_gps.so:/system/lib/hw/sensors.redhookbay.so|libshim_sensors.so:/system/lib/libtcs.so|libshim_tcs.so:/system/lib/libparameter.so|libshim_audio.so:/system/lib/parameter-framework-plugins/Audio/libtinyalsa-subsystem.so|libshim_audio.so:/system/lib/hw/camera.vendor.redhookbay.so|libshim_camera.so
 
     write /sys/class/graphics/fbcon/cursor_blink 0
     mkdir /data/system/ 0770 system system
@@ -61,17 +61,16 @@ on boot
     chown system system /sys/module/intel_mid_osip/parameters/thermal_shutdown_occured
     chown system system /sys/devices/platform/coretemp.0/temp2_threshold1
     chown system system /sys/devices/platform/coretemp.0/temp2_threshold2
-    chown system system /sys/class/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw
     chown system system /sys/fps_throttle/notify
     chown system system /sys/fps_throttle/handshake
 
 #   Disable audio offloading
     setprop audio.offload.disable 1
 
-    chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/control
-    chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/data
-    chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/data_size
-    chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/fw_version
+ #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/control
+ #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/data
+ #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/data_size
+ #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/fw_version
 
 # Lte coexistence ( can be enabled the following: NRT / NRT+RT )
 # Enable LTE Coexistence NRT (Non Real Time)
@@ -115,12 +114,12 @@ on post-fs-data
     mkdir /data/misc/firmware 0770 system system
 
     #Invoke fuel gauging helper binary to restore config data
-    chmod 0770 /dev/max170xx
-    chown system system /dev/max170xx
-    chown system system /sys/class/power_supply/max17047_battery/model_name
-    chown system system /sys/class/power_supply/max17047_battery/serial_number
-    symlink /dev/max170xx /dev/fg
-    start fg_conf
+    #chmod 0770 /dev/max170xx
+    #chown system system /dev/max170xx
+    #symlink /dev/max170xx /dev/fg
+    #chown system system /sys/class/power_supply/max17047_battery/model_name
+    #chown system system /sys/class/power_supply/max17047_battery/serial_number
+    #start fg_conf
 
     mkdir /data/logs
     chown system log /data/logs
@@ -197,14 +196,11 @@ on post-fs
     chmod 0644 /sys/class/leds/green/blink
 
 #For Quick Charge control
-    chown system system /proc/smb1357_qc_disable
-
-#For Disable Charging control
-	chown system system /proc/smb1357_disable_chrg
+#    chown system system /proc/smb1357_qc_disable
 
 # Permissions for BCU sysfs interface and make generic path to access by apps
-    chown system system /sys/devices/platform/bcove_bcu/camflash_ctrl
-    symlink /sys/devices/platform/bcove_bcu /dev/bcu
+#    chown system system /sys/devices/platform/bcove_bcu/camflash_ctrl
+#    symlink /sys/devices/platform/bcove_bcu /dev/bcu
     restorecon_recursive /factory
     restorecon_recursive /config
     restorecon_recursive /logs
@@ -216,20 +212,10 @@ on post-fs
     chown system system /proc/asus_touch_proximity_status
 
 # Permissions for Touch Glove Mode
-    chown system system /sys/bus/i2c/devices/i2c-7/7-0038/ftsglovemode
 
 # Permissions for Touch dclick Mode
-    chown system radio /sys/bus/i2c/devices/i2c-7/7-0038/ftsdclickmode
-    chmod 0664 /sys/bus/i2c/devices/i2c-7/7-0038/ftsdclickmode
-
 # Permissions for Touch Gesture Mode
-    chown system system /sys/bus/i2c/devices/i2c-7/7-0038/ftsgesturemode
 
-# Permissions for Touch Cover Mode
-    chown system system /sys/bus/i2c/devices/i2c-7/7-0038/ftscovermode
-
-# Permissions for keydisabler
-    chown root system /sys/bus/i2c/devices/i2c-7/7-0038/ftskeypadenable
 
 # Permissions for Sdcard Power Node
 	chown system system /proc/asus_sd_power
@@ -242,10 +228,10 @@ service sl_si_service /system/bin/sl_si_service d=1
     disabled
     oneshot
 
-service fg_conf /system/bin/fg_conf -w
-    group system
-    oneshot
-    disabled
+#service fg_conf /system/bin/fg_conf -w
+#    group system
+#    oneshot
+#    disabled
 
 #+++++++++++++++++++++lynn 2014/10/27 FAC++++++++++++++++++++++
 # import ASUS factory tools script
@@ -273,12 +259,12 @@ service wifitest_runcmd /system/bin/wifitest_runcmd.sh
      disabled
      oneshot
 
-on property:init.svc.pvrsrvctl=stopped
-    # GPU freq
-    chown system system /sys/class/devfreq/dfrgx/max_freq
-    chmod 0660 /sys/class/devfreq/dfrgx/max_freq
-    chown system system /sys/class/devfreq/dfrgx/min_freq
-    chmod 0660 /sys/class/devfreq/dfrgx/min_freq
+#on property:init.svc.pvrsrvctl=stopped
+#    # GPU freq
+#    chown system system /sys/class/devfreq/dfrgx/max_freq
+#    chmod 0660 /sys/class/devfreq/dfrgx/max_freq
+#    chown system system /sys/class/devfreq/dfrgx/min_freq
+#    chmod 0660 /sys/class/devfreq/dfrgx/min_freq
 
 on property:service.mmgr.smp=1
    write /proc/irq/36/smp_affinity f
@@ -302,17 +288,12 @@ on charger
     mount ext4 /dev/block/by-name/logs /logs nosuid nodev barrier=1,data=ordered
 
     start watchdogd
-    #insmod /lib/modules/rmi4.ko boot_mode=1
 
     # Invoke fuel gauging helper binary to restore config data
-    chmod 0770 /dev/max170xx
-    chown system system /dev/max170xx
-    symlink /dev/max170xx /dev/fg
-    wait /system/bin/fg_conf
-    start fg_conf
-
-    chmod 0664 /sys/devices/pci0000:00/0000:00:10.0/hsic_enable
-    write /sys/devices/pci0000:00/0000:00:10.0/hsic_enable 0
+    #symlink /dev/max170xx /dev/fg
+    #chmod 0775 /dev/fg
+    #wait /system/bin/fg_conf
+    #start fg_conf
 
 #Turn on VPROG2 Power rail to avoid power leakage in Sensor
 
@@ -350,4 +331,4 @@ service_redefine keystore /system/bin/keystore /data/misc/keystore
     class main
     user keystore
     group keystore drmrpc system
-    setenv LD_SHIM_LIBS /system/libbinder.so|libstock_crypto.so:/system/lib/hw/keystore.vendor.moorefield.so|libstock_crypto.so
+    setenv LD_SHIM_LIBS /system/libbinder.so|libstock_crypto.so:/system/lib/hw/keystore.vendor.clovertrail.so|libstock_crypto.so
