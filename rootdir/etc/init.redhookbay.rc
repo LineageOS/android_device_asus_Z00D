@@ -17,7 +17,7 @@ on early-init
     setprop ro.boot.min.cap 0
 
 on init
-    export LD_SHIM_LIBS /system/bin/mmgr|libshim_mmgr.so:/system/bin/gpsd|libshim_gps.so:/system/lib/hw/gps.redhookbay.so|libshim_gps.so:/system/lib/hw/sensors.redhookbay.so|libshim_sensors.so:/system/lib/libtcs.so|libshim_tcs.so:/system/lib/libparameter.so|libshim_audio.so:/system/lib/parameter-framework-plugins/Audio/libroute-subsystem.so|libshim_audio.so:/system/lib/parameter-framework-plugins/Audio/libtinyalsa-subsystem.so|libshim_audio.so:/system/lib/hw/camera.vendor.redhookbay.so|libshim_camera.so
+    export LD_SHIM_LIBS /system/bin/mmgr|libshim_mmgr.so:/system/bin/gpsd|libshim_gps.so:/system/lib/hw/gps.redhookbay.so|libshim_gps.so:/system/lib/hw/sensors.redhookbay.so|libshim_sensors.so:/system/lib/libtcs.so|libshim_tcs.so:/system/lib/libparameter.so|libshim_audio.so:/system/lib/parameter-framework-plugins/Audio/libroute-subsystem.so|libshim_audio.so:/system/lib/parameter-framework-plugins/Audio/libtinyalsa-subsystem.so|libshim_audio.so:/system/lib/libaudience-manager.so|libshim_audio.so:/system/lib/hw/camera.vendor.redhookbay.so|libshim_camera.so
     chmod 0770 /system/bin/upi_ug31xx
     chown system system /system/bin/upi_ug31xx
 
