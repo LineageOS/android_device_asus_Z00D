@@ -97,9 +97,6 @@ ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 BOARD_HARDWARE_CLASS := device/asus/mofd-common/cmhw
 endif
 
-# Healthd
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.moorefield
-
 # Houdini: enable ARM codegen for x86
 BUILD_ARM_FOR_X86 := true
 
