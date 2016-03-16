@@ -2,10 +2,11 @@ import init.common.rc
 import init.debug.rc
 import init.diag.rc
 import init.avc.rc
+import init.wireless.rc
 import init.wifi.rc
 import init.platform.usb.rc
 import init.gps.rc
-import init.nfc.rc
+import init.compass.rc
 import init.bt.rc
 import init.modem.rc
 import init.config_init.rc
