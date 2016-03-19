@@ -4,11 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := config_init.sh
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-LOCAL_SRC_FILES    := etc/config_init-mofd_v1.sh
-else # mofd-common Z00A Z008
-LOCAL_SRC_FILES    := etc/config_init-redhookbay.sh
-endif # cvtlp A500CG
+LOCAL_SRC_FILES    := etc/config_init.sh
 LOCAL_MODULE_PATH  := $(TARGET_OUT_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
@@ -16,7 +12,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := fstab.$(REF_PRODUCT_NAME)
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/fstab.mofd_v1
+LOCAL_SRC_FILES    := etc/fstab.redhookbay
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -24,11 +20,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.avc.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-LOCAL_SRC_FILES    := etc/init.avc-mofd_v1.rc
-else # mofd-common Z00A Z008
-LOCAL_SRC_FILES    := etc/init.avc-redhookbay.rc
-endif # cvtlp A500CG
+LOCAL_SRC_FILES    := etc/init.avc.rc
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -84,11 +76,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.diag.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-LOCAL_SRC_FILES    := etc/init.diag-mofd_v1.rc
-else # mofd-common Z00A Z008
-LOCAL_SRC_FILES    := etc/init.diag-redhookbay.rc
-endif # cvtlp A500CG
+LOCAL_SRC_FILES    := etc/init.diag.rc
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -120,11 +108,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.modem.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-LOCAL_SRC_FILES    := etc/init.modem-mofd_v1.rc
-else # mofd-common Z00A Z008
-LOCAL_SRC_FILES    := etc/init.modem-redhookbay.rc
-endif # cvtlp A500CG
+LOCAL_SRC_FILES    := etc/init.modem.rc
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -132,23 +116,9 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.$(REF_PRODUCT_NAME).rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-LOCAL_SRC_FILES    := etc/init.mofd_v1.rc
-else # mofd-common Z00A Z008
 LOCAL_SRC_FILES    := etc/init.redhookbay.rc
-endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
-
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.nfc.rc
-LOCAL_MODULE_TAGS  := optional eng
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.nfc.rc
-LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
-include $(BUILD_PREBUILT)
-endif # mofd-common Z00A Z008
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.platform.usb.rc
@@ -162,7 +132,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.power.$(REF_PRODUCT_NAME).rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.power.mofd_v1.rc
+LOCAL_SRC_FILES    := etc/init.power.redhookbay.rc
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -170,7 +140,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := init.recovery.$(REF_PRODUCT_NAME).rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.recovery.mofd_v1.rc
+LOCAL_SRC_FILES    := etc/init.recovery.redhookbay.rc
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
@@ -218,11 +188,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := ueventd.$(REF_PRODUCT_NAME).rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-LOCAL_SRC_FILES    := etc/ueventd.mofd_v1.rc
-else # mofd-common Z00A Z008
 LOCAL_SRC_FILES    := etc/ueventd.redhookbay.rc
-endif # cvtlp A500CG
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 

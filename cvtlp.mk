@@ -21,7 +21,7 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalv
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 DEVICE_PACKAGE_OVERLAYS := \
-    device/asus/mofd-common/overlay
+    device/asus/cvtlp-common/overlay
 
 # Art
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -41,13 +41,13 @@ PRODUCT_PACKAGES += \
     audio.usb.default
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/audio/asound.conf:system/etc/asound.conf \
-    device/asus/mofd-common/audio/audio_policy.conf:system/etc/audio_policy.conf \
-    device/asus/mofd-common/audio/route_criteria.conf:system/etc/route_criteria.conf
+    device/asus/cvtlp-common/audio/asound.conf:system/etc/asound.conf \
+    device/asus/cvtlp-common/audio/audio_policy.conf:system/etc/audio_policy.conf \
+    device/asus/cvtlp-common/audio/route_criteria.conf:system/etc/route_criteria.conf
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+    device/asus/cvtlp-common/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 PRODUCT_PROPERTY_OVERRIDES += \
     bt.hfp.WideBandSpeechEnabled=true
@@ -73,29 +73,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     pvr_drv_video
 
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
-PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/powervr.ini:system/etc/powervr.ini
-endif
-
 # GPS
 PRODUCT_PACKAGES += \
     libshim_gps
 
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/configs/gps.conf:system/etc/gps.conf \
-    device/asus/mofd-common/configs/gps.xml:system/etc/gps.xml
+    device/asus/cvtlp-common/configs/gps.conf:system/etc/gps.conf \
+    device/asus/cvtlp-common/configs/gps.xml:system/etc/gps.xml
 
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.spid.gps.tty=ttyMFD2
-
-else
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.spid.gps.tty=ttyMFD3
-
-endif
 
 # Houdini (arm native bridge)
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -108,18 +95,15 @@ PRODUCT_PACKAGES += \
     CMActions \
     com.cyanogenmod.keyhandler
 
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
 # Key layout files
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/keylayout/ftxxxx_ts.kcm:system/usr/keychars/ftxxxx_ts.kcm \
-    device/asus/mofd-common/keylayout/ftxxxx_ts.kl:system/usr/keylayout/ftxxxx_ts.kl \
-    device/asus/mofd-common/keylayout/lm49453-audio_Intel_MID_Audio_Jack.kl:system/usr/keylayout/lm49453-audio_Intel_MID_Audio_Jack.kl
-endif
-PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/keylayout/ASUS_TransKeyboard.kl:system/usr/keylayout/ASUS_TransKeyboard.kl \
-    device/asus/mofd-common/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    device/asus/mofd-common/keylayout/Vendor_0b05_Product_17fc.kl:system/usr/keylayout/Vendor_0b05_Product_17fc.kl \
-    device/asus/mofd-common/keylayout/Vendor_0b05_Product_1803.kl:system/usr/keylayout/Vendor_0b05_Product_1803.kl
+    device/asus/cvtlp-common/keylayout/synaptics_dsx.kcm:system/usr/keychars/synaptics_dsx.kcm \
+    device/asus/cvtlp-common/keylayout/synaptics_dsx.kl:system/usr/keylayout/synaptics_dsx.kl \
+    device/asus/cvtlp-common/keylayout/cloverview_audio_Intel_MID_Audio_Jack.kl:system/usr/keylayout/cloverview_audio_Intel_MID_Audio_Jack.kl \
+    device/asus/cvtlp-common/keylayout/ASUS_TransKeyboard.kl:system/usr/keylayout/ASUS_TransKeyboard.kl \
+    device/asus/cvtlp-common/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    device/asus/cvtlp-common/keylayout/Vendor_0b05_Product_17fc.kl:system/usr/keylayout/Vendor_0b05_Product_17fc.kl \
+    device/asus/cvtlp-common/keylayout/Vendor_0b05_Product_1803.kl:system/usr/keylayout/Vendor_0b05_Product_1803.kl
 
 # Keystore
 PRODUCT_PACKAGES += \
@@ -130,24 +114,14 @@ PRODUCT_PACKAGES += \
     lights.$(TARGET_BOARD_PLATFORM)
 
 # Media
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
-PRODUCT_PROPERTY_OVERRIDES += \
-    drm.service.enabled=true \
-    ro.com.widevine.cachesize=16777216 \
-    media.stagefright.cache-params=10240/20480/15 \
-    media.aac_51_output_enabled=true
-else
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true \
     ro.com.widevine.cachesize=16777216
-endif
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/media/media_codecs.xml:system/etc/media_codecs.xml \
-    device/asus/mofd-common/media/media_profiles.xml:system/etc/media_profiles.xml \
-    device/asus/mofd-common/media/mfx_omxil_core.conf:system/etc/mfx_omxil_core.conf \
-    device/asus/mofd-common/media/video_isv_profile.xml:system/etc/video_isv_profile.xml \
-    device/asus/mofd-common/media/wrs_omxil_components.list:system/etc/wrs_omxil_components.list \
+    device/asus/cvtlp-common/media/media_codecs.xml:system/etc/media_codecs.xml \
+    device/asus/cvtlp-common/media/media_profiles.xml:system/etc/media_profiles.xml \
+    device/asus/cvtlp-common/media/wrs_omxil_components.list:system/etc/wrs_omxil_components.list \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
@@ -183,27 +157,9 @@ PRODUCT_PACKAGES += \
     libOMXVideoDecoderH263 \
     libOMXVideoDecoderMPEG4 \
     libOMXVideoEncoderAVC \
-    libOMXVideoDecoderWMV
-
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
-PRODUCT_PACKAGES += \
-    libmixvbp_mpeg2 \
-    libOMXVideoDecoderVP8 \
-    libOMXVideoDecoderVP9HWR \
-    libOMXVideoDecoderMPEG2 \
-    libOMXVideoDecoderVP9Hybrid \
-    libOMXVideoEncoderVP8
-endif
-
-PRODUCT_PACKAGES += \
+    libOMXVideoDecoderWMV \
     libOMXVideoEncoderH263 \
     libOMXVideoEncoderMPEG4
-
-# Media: libISV
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
-PRODUCT_PACKAGES += \
-    libisv_omx_core
-endif
 
 # PowerHAL
 PRODUCT_PACKAGES += \
@@ -237,7 +193,6 @@ PRODUCT_PACKAGES += \
     init.logtool.rc \
     init.modem.rc \
     init.$(REF_PRODUCT_NAME).rc \
-    init.nfc.rc \
     init.platform.usb.rc \
     init.power.$(REF_PRODUCT_NAME).rc \
     init.recovery.$(REF_PRODUCT_NAME).rc \
@@ -261,18 +216,12 @@ PRODUCT_PACKAGES += \
     libshim_sensors
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
+    device/asus/cvtlp-common/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
 
 # Thermal itux
 ENABLE_ITUXD := true
 PRODUCT_PACKAGES += \
     ituxd
-
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
-# IMG graphics
-PRODUCT_PACKAGES += \
-    hwcomposer.moorefield
-endif
 
 # pvr
 PRODUCT_PACKAGES += \
@@ -317,9 +266,9 @@ PRODUCT_PACKAGES += \
     wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+    device/asus/cvtlp-common/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
-$(call inherit-product-if-exists, vendor/asus/mofd-common/mofd-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/asus/cvtlp-common/cvtlp-common-vendor.mk)
 
 # stlport required for our LP blobs
 PRODUCT_PACKAGES += \
@@ -328,12 +277,6 @@ PRODUCT_PACKAGES += \
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
 
-ifneq ($(filter Z00A Z008 ,$(TARGET_DEVICE)),)
-# specific management of sep_policy.conf
-PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/sep_policy.conf:system/etc/security/sep_policy.conf
-
-endif
 # hardware optimizations
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    dalvik.vm.isa.x86.features=sse4_2,aes_in,popcnt,movbe

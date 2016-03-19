@@ -45,13 +45,13 @@ else
   fi
 fi
 
-BASE=../../../vendor/$VENDOR/mofd-common/proprietary
+BASE=../../../vendor/$VENDOR/cvtlp-common/proprietary
 rm -rf $BASE/*
 
 DEVBASE=../../../vendor/$VENDOR/$DEVICE/proprietary
 rm -rf $DEVBASE/*
 
-extract ../../$VENDOR/mofd-common/proprietary-files.txt $BASE
+extract ../../$VENDOR/cvtlp-common/proprietary-files.txt $BASE
 extract ../../$VENDOR/$DEVICE/proprietary-files.txt $DEVBASE
 
 ./setup-makefiles.sh

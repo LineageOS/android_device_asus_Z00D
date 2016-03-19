@@ -15,31 +15,18 @@
 #
 
 TARGET_ARCH := x86
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-TARGET_ARCH_VARIANT := silvermont
-else
-ifneq ($(filter T00F T00G T00I,$(TARGET_DEVICE)),)
 TARGET_ARCH_VARIANT := atom
-endif
-endif
 TARGET_CPU_ABI := x86
 TARGET_CPU_ABI2 := armeabi-v7a
 TARGET_CPU_ABI_LIST := x86,armeabi-v7a,armeabi
 TARGET_CPU_ABI_LIST_32_BIT := x86,armeabi-v7a,armeabi
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := x86_64-linux-android-
-ifneq ($(filter T00F T00G T00I,$(TARGET_DEVICE)),)
 TARGET_BOARD_PLATFORM := clovertrail
 TARGET_BOOTLOADER_BOARD_NAME := clovertrail
-else
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-TARGET_BOARD_PLATFORM := moorefield
-TARGET_BOOTLOADER_BOARD_NAME := moorefield
-endif
-endif
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-TARGET_SPECIFIC_HEADER_PATH := device/asus/mofd-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/asus/cvtlp-common/include
 
 TARGET_DROIDBOOT_LIBS := libintel_droidboot
 
@@ -56,20 +43,13 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/mofd-common/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/cvtlp-common/bluetooth
 
 # Bootloader
 ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
 TARGET_OTA_ASSERT_DEVICE := ASUS_T00F,ASUS_T00G,ASUS_T00J,ASUS_T00J1
 else
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-TARGET_OTA_ASSERT_DEVICE := Z00A,Z008
-endif
-endif
-
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-# bootstub as 2nd bootloader
-TARGET_BOOTLOADER_IS_2ND := true
+TARGET_OTA_ASSERT_DEVICE := ASUS_T00I
 endif
 
 # Camera
@@ -81,7 +61,7 @@ TARGET_PROVIDES_CAMERA_HAL := true
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_SHOW_PERCENTAGE := true
-BOARD_HEALTHD_CUSTOM_CHARGER_RES := device/asus/mofd-common/charger/images
+BOARD_HEALTHD_CUSTOM_CHARGER_RES := device/asus/cvtlp-common/charger/images
 
 # Dex-preoptimization: Speeds up initial boot (if we ever o a user build, which we don't)
 ifeq ($(HOST_OS),linux)
@@ -92,23 +72,16 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 # Hardware
-BOARD_HARDWARE_CLASS := device/asus/mofd-common/cmhw
-endif
+BOARD_HARDWARE_CLASS := device/asus/cvtlp-common/cmhw
 
 # Healthd
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.moorefield
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.clovertrail
 
 # Houdini: enable ARM codegen for x86
 BUILD_ARM_FOR_X86 := true
 
 # IMG graphics
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-BOARD_GFX_REV := RGX6400
-ENABLE_MRFL_GRAPHICS := true
-INTEL_HWC_MOOREFIELD := true
-endif
 COMMON_GLOBAL_CFLAGS += -DASUS_ZENFONE2_LP_BLOBS
 ENABLE_IMG_GRAPHICS := true
 HWUI_IMG_FBO_CACHE_OPTIM := true
@@ -118,15 +91,10 @@ TARGET_INTEL_HWCOMPOSER_FORCE_ONLY_ONE_RGB_LAYER := true
 VSYNC_EVENT_PHASE_OFFSET_NS := 7500000
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-BOARD_EGL_CFG := device/asus/mofd-common/configs/egl.cfg
+BOARD_EGL_CFG := device/asus/cvtlp-common/configs/egl.cfg
 
 ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.opengles.version = 196608
-
-MAX_EGL_CACHE_ENTRY_SIZE := 65536
-MAX_EGL_CACHE_SIZE := 1048576
-endif
+    ro.opengles.version = 131072
 
 INTEL_VA := true
 BUILD_WITH_FULL_STAGEFRIGHT := true
@@ -142,20 +110,8 @@ USE_OPENGL_RENDERER := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
 
 # Init
-TARGET_INIT_VENDOR_LIB := libinit_mofd
-TARGET_LIBINIT_DEFINES_FILE := device/asus/mofd-common/init/init_mofd.cpp
-
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-# Inline kernel building
-TARGET_KERNEL_SOURCE := kernel/asus/moorefield
-TARGET_KERNEL_ARCH := x86_64
-BOARD_KERNEL_IMAGE_NAME := bzImage
-TARGET_KERNEL_CONFIG := cyanogenmod_zenfone2_defconfig
-
-# Kernel cmdline
-BOARD_KERNEL_CMDLINE := init=/init pci=noearly loglevel=0 vmalloc=256M androidboot.hardware=mofd_v1 watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxxx:xxxx:xxxx androidboot.serialno=01234567890123456789 snd_pcm.maximum_substreams=8 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on debug_locks=0 n_gsm.mux_base_conf=\"ttyACM0,0 ttyXMM0,1\"
-#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-endif
+TARGET_INIT_VENDOR_LIB := libinit_cvtlp
+TARGET_LIBINIT_DEFINES_FILE := device/asus/cvtlp-common/init/init_cvtlp.cpp
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -168,33 +124,10 @@ USE_HW_VP8 := true
 
 # Media: DRM Protected Video
 BOARD_WIDEVINE_OEMCRYPTO_LEVEL := 1
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-USE_INTEL_SECURE_AVC := true
 
-endif
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-# Settings for the Media SDK library and plug-ins:
-# - USE_MEDIASDK: use Media SDK support or not
-# - MFX_IPP: sets IPP library optimization to use
-USE_MEDIASDK := true
-MFX_IPP := p8
-
-# Video Post Processing
-TARGET_HAS_ISV := true
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    persist.intel.isv.vpp = 1 \
-    persist.intel.isv.frc = 1
-
-endif
 COMMON_GLOBAL_CFLAGS += -DGFX_BUF_EXT
 
 # Partitions
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2415919104
-BOARD_FLASH_BLOCK_SIZE := 2048
-BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
-endif
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 1677721600
 
@@ -208,20 +141,18 @@ BOARD_PROVIDES_LIBRIL := true
 BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-TARGET_RECOVERY_FSTAB := device/asus/mofd-common/rootdir/etc/fstab.mofd_v1
-TARGET_RECOVERY_DEVICE_MODULES := libinit_mofd librecovery_updater_mofd intel_prop thermald
+TARGET_RECOVERY_FSTAB := device/asus/cvtlp-common/rootdir/etc/fstab.redhookbay
+TARGET_RECOVERY_DEVICE_MODULES := libinit_cvtlp librecovery_updater_cvtlp intel_prop thermald
 
 # Security
 BUILD_WITH_SECURITY_FRAMEWORK := chaabi_token
 BUILD_WITH_CHAABI_SUPPORT := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += device/asus/mofd-common/sepolicy
+BOARD_SEPOLICY_DIRS += device/asus/cvtlp-common/sepolicy
 
 # Tap-to-Wake
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
-TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:09.2/i2c-7/7-0038/ftsdclickmode"
-endif
+TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/dclick_mode"
 
 # Wifi
 BOARD_WLAN_DEVICE           := bcmdhd
@@ -237,12 +168,10 @@ WIFI_DRIVER_FW_PATH_AP    := "/system/etc/firmware/fw_bcmdhd_43362_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA   := "/system/etc/firmware/fw_bcmdhd_43362.bin"
 WIFI_DRIVER_MODULE_ARG := "iface_name=wlan0 firmware_path=/system/etc/firmware/fw_bcmdhd_43362.bin"
 else
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd.bin"
 endif
-endif
 
 # Use the non-open-source parts, if they're present
-$(call inherit-product-if-exists,  vendor/asus/mofd-common/BoardConfigVendor.mk)
+$(call inherit-product-if-exists,  vendor/asus/cvtlp-common/BoardConfigVendor.mk)

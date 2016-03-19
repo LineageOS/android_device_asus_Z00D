@@ -20,7 +20,7 @@
 # to only building on ARM if they include assembly. Individual makefiles
 # are responsible for having their own logic, for fine-grained control.
 
-ifneq ($(filter Z00A Z008 T00F T00G T00I,$(TARGET_DEVICE)),)
+ifneq ($(filter T00F T00G T00I,$(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 

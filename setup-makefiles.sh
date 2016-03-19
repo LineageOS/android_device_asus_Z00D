@@ -110,10 +110,10 @@ PRODUCT_COPY_FILES += \\
 EOF
 
 LINEEND=" \\"
-COUNT=`wc -l ../mofd-common/proprietary-files.txt | awk {'print $1'}`
-DISM=`egrep -c '(^#|^$)' ../mofd-common/proprietary-files.txt`
+COUNT=`wc -l ../cvtlp-common/proprietary-files.txt | awk {'print $1'}`
+DISM=`egrep -c '(^#|^$)' ../cvtlp-common/proprietary-files.txt`
 COUNT=`expr $COUNT - $DISM`
-for FILE in `egrep -v '(^#|^$)' ../mofd-common/proprietary-files.txt`; do
+for FILE in `egrep -v '(^#|^$)' ../cvtlp-common/proprietary-files.txt`; do
   COUNT=`expr $COUNT - 1`
   if [ $COUNT = "0" ]; then
     LINEEND=""
@@ -190,7 +190,7 @@ EOF
 
 LOCAL_PATH := \$(call my-dir)
 
-ifneq (\$(filter Z008 Z00A,\$(TARGET_DEVICE)),)
+ifneq (\$(filter T00F T00G T00I,\$(TARGET_DEVICE)),)
 
 include \$(CLEAR_VARS)
 LOCAL_MODULE := intel_prop
