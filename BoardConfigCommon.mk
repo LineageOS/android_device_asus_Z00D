@@ -26,9 +26,28 @@ TARGET_BOOTLOADER_BOARD_NAME := clovertrail
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
+# Specific headers
+TARGET_BOARD_KERNEL_HEADERS := device/asus/cvtlp-common/kernel-headers
 TARGET_SPECIFIC_HEADER_PATH := device/asus/cvtlp-common/include
 
 TARGET_DROIDBOOT_LIBS := libintel_droidboot
+
+# Releasetools
+TARGET_RELEASETOOLS_EXTENSIONS := ./device/asus/cvtlp-common/releasetools/extensions
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/asus/cvtlp-common/releasetools/zenfone_ota_from_target_files
+TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/asus/cvtlp-common/releasetools/zenfone_img_from_target_files
+TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/cvtlp-common/releasetools/make_recovery_patch
+
+# OTA Packaging / Bootimg creation
+BOARD_CUSTOM_BOOTIMG := true
+BOARD_CUSTOM_BOOTIMG_MK := device/asus/T00F/mkbootimg.mk
+NEED_KERNEL_MODULE_ROOT := true
+
+TARGET_RECOVERY_DEVICE_MODULES += libosip-updater liboempartitioning_static
+TARGET_RECOVERY_UPDATER_LIBS += libosip-updater
+TARGET_RECOVERY_UPDATER_EXTRA_LIBS += \
+    libosip-updater \
+    liboempartitioning_static
 
 # Adb
 BOARD_FUNCTIONFS_HAS_SS_COUNT := true
@@ -91,6 +110,8 @@ TARGET_INTEL_HWCOMPOSER_FORCE_ONLY_ONE_RGB_LAYER := true
 VSYNC_EVENT_PHASE_OFFSET_NS := 7500000
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 
+# Opengles
+COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH -DWORKAROUND_BUG_10194508
 BOARD_EGL_CFG := device/asus/cvtlp-common/configs/egl.cfg
 
 ADDITIONAL_DEFAULT_PROPERTIES += \

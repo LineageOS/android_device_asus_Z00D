@@ -14,8 +14,9 @@ allow init rootfs:lnk_file setattr;
 allow init radio_cache_file:file rw_file_perms;
 allow init radio_cache_file:dir { rw_dir_perms relabelto };
 
-# /system/etc/security/sep_policy.conf is loaded
-allow init sepfs:file w_file_perms;
-
 # Allow shimlibs
 allow init { domain -lmkd }:process noatsecure;
+# accept shim libs
+allow init surfaceflinger:process noatsecure;
+allow init mediaserver:process noatsecure;
+allow init zygote:process noatsecure;

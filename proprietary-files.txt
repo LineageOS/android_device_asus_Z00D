@@ -161,10 +161,11 @@ etc/permissions/asus.software.zenui.xml
 # Bluetooth
 bin/bd_prov
 vendor/lib/libbt-vendor.so
+etc/firmware/BCM2076B1_002.002.004.0138.0139.hcd
 
 # DRM
 lib/libkeymaster.so
-lib/hw/keystore.moorefield.so:lib/hw/keystore.vendor.clovertrail.so
+lib/hw/keystore.clovertrail.so:lib/hw/keystore.vendor.clovertrail.so
 lib/libcrypto.so:lib/libstock_crypto.so
 vendor/lib/drm/libdrmwvmplugin.so
 vendor/lib/mediadrm/libwvdrmengine.so
@@ -196,7 +197,9 @@ vendor/lib/hw/gralloc.redhookbay.so:vendor/lib/hw/gralloc.clovertrail.so
 vendor/lib/hw/memtrack.redhookbay.so
 vendor/lib/hw/memtrack.redhookbay.so:vendor/lib/hw/memtrack.clovertail.so
 
-# Unknown Firmware
+# Firmware
+etc/firmware/fmc_init_1283.2.bts
+etc/firmware/fm_rx_init_1283.2.bts
 etc/firmware/s3202_gff.img
 etc/firmware/s3202_ogs.img
 
@@ -220,9 +223,10 @@ lib/libmixvbp_h264.so
 lib/libmixvbp_mpeg4.so
 lib/libmixvbp.so
 lib/libmixvbp_vc1.so
-lib/libmixvbp_vp8.so
 lib/libOMXVideoDecoderAVC.so
 lib/libOMXVideoDecoderAVCSecure.so
+etc/firmware/topazsc_fw.bin
+etc/firmware/msvdx_fw_mfld_DE2.0.bin
 
 # Radio
 bin/mmgr
@@ -236,5 +240,61 @@ lib/libtcs.so
 lib/librapid-ril-core.so
 lib/librapid-ril-util.so
 
+etc/telephony/XMM6360_CONF_3.xml
+etc/telephony/XMM7160_CONF_1.xml
+etc/telephony/XMM7160_CONF_2.xml
+etc/telephony/XMM7160_CONF_3.xml
+etc/telephony/XMM7160_CONF_5.xml
+etc/telephony/XMM7160_CONF_6.xml
+etc/telephony/XMM7160_CONF_7.xml
+etc/telephony/XMM7260_CONF_1.xml
+etc/telephony/XMM7260_CONF_10.xml
+etc/telephony/XMM7260_CONF_12.xml
+etc/telephony/XMM7260_CONF_6.xml
+etc/telephony/XMM7260_CONF_8.xml
+etc/telephony/XMM7260_CONF_9.xml
+
 # Thermal
 bin/thermald
+
+etc/parameter-framework/Settings/Vibrator/VibratorConfigurableDomains.xml
+etc/parameter-framework/Structure/Audio/ConfigurationSubsystem.xml
+etc/parameter-framework/Structure/Audio/IntelSSPSubsystem.xml
+etc/parameter-framework/Structure/Audio/LPEMixerSubsystem.xml
+etc/parameter-framework/Structure/Audio/SysfsPmdownTimeSubsystem.xml
+etc/parameter-framework/Structure/Route/DebugFsSubsystem.xml
+etc/parameter-framework/Structure/Route/RouteClass.xml
+etc/parameter-framework/Structure/Route/RouteSubsystem.xml
+etc/parameter-framework/Structure/Route/RouteSubsystem-RoutesTypes.xml
+etc/parameter-framework/Structure/Vibrator/MiscConfigurationSubsystem.xml
+etc/parameter-framework/Structure/Vibrator/SysfsVibratorClass.xml
+etc/parameter-framework/Structure/Vibrator/SysfsVibratorSubsystem.xml
+etc/parameter-framework/ParameterFrameworkConfigurationRoute.xml
+etc/parameter-framework/ParameterFrameworkConfigurationVibrator.xml
+
+lib/parameter-framework-plugins/Audio/libaudience-subsystem.so
+lib/parameter-framework-plugins/Audio/libimc-subsystem.so
+lib/parameter-framework-plugins/Audio/liblpe-subsystem.so
+lib/parameter-framework-plugins/Audio/libtinyalsa-subsystem.so
+lib/parameter-framework-plugins/Fs/libfs-subsystem.so
+lib/parameter-framework-plugins/Route/libroute-subsystem.so
+lib/parameter-framework-plugins/System/libproperty-subsystem.so
+
+usr/share/alsa/alsa.conf
+etc/firmware/fw_sst_08e7.bin
+etc/firmware/mp3_dec_1.bin
+etc/firmware/aac_dec_1.bin
+
+# hwcomposer
+lib/libmultidisplay.so
+# Widi
+lib/libhwcwidi.so
+lib/libwidiedid.so
+lib/libwidimedia.so
+lib/libwidimediasink.so
+lib/libwidirtsp.so
+lib/libwidirtspsink.so
+lib/libwidirtspsink_jni.so
+lib/libwidiuibc.so
+lib/libwidiuibcjni.so
+etc/widi/widi.conf

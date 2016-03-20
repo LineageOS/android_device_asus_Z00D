@@ -79,7 +79,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     device/asus/cvtlp-common/configs/gps.conf:system/etc/gps.conf \
-    device/asus/cvtlp-common/configs/gps.xml:system/etc/gps.xml
+    device/asus/cvtlp-common/configs/gps.xml:system/etc/gpsconfig.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.spid.gps.tty=ttyMFD3
@@ -273,6 +273,17 @@ $(call inherit-product-if-exists, vendor/asus/cvtlp-common/cvtlp-common-vendor.m
 # stlport required for our LP blobs
 PRODUCT_PACKAGES += \
     libstlport
+
+# OTA Packaging / Bootimg creation
+PRODUCT_PACKAGES += \
+    pack_intel \
+    unpack_intel
+
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+    make_ext4fs \
+    resize2fs_static \
+    setup_fs
 
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
