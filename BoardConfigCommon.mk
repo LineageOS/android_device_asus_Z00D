@@ -163,7 +163,7 @@ BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 TARGET_RECOVERY_FSTAB := device/asus/cvtlp-common/rootdir/etc/fstab.redhookbay
-TARGET_RECOVERY_DEVICE_MODULES := libinit_cvtlp librecovery_updater_cvtlp intel_prop thermald
+TARGET_RECOVERY_DEVICE_MODULES := libinit_cvtlp librecovery_updater_cvtlp intel_prop thermald upi_ug31xx
 
 # Security
 BUILD_WITH_SECURITY_FRAMEWORK := chaabi_token
