@@ -79,7 +79,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     device/asus/cvtlp-common/configs/gps.conf:system/etc/gps.conf \
-    device/asus/cvtlp-common/configs/gps.xml:system/etc/gpsconfig.xml
+    device/asus/cvtlp-common/configs/gpsconfig.xml:system/etc/gpsconfig.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.spid.gps.tty=ttyMFD3
