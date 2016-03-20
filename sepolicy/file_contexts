@@ -111,6 +111,7 @@
 # Audio
 /dev/snd/.*                             u:object_r:audio_device:s0
 /dev/intel_sst_ctrl                     u:object_r:audio_device:s0
+/dev/audience_es305                     u:object_r:audio_device:s0
 
 # WTF is the ril doing here with these firmware file in /cache??
 /cache/telephony(/.*)?                  u:object_r:radio_cache_file:s0
