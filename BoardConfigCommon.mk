@@ -43,11 +43,8 @@ BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := device/asus/cvtlp-common/mkbootimg.mk
 NEED_KERNEL_MODULE_ROOT := true
 
-TARGET_RECOVERY_DEVICE_MODULES += libosip-updater liboempartitioning_static
-TARGET_RECOVERY_UPDATER_LIBS += libosip-updater
-TARGET_RECOVERY_UPDATER_EXTRA_LIBS += \
-    libosip-updater \
-    liboempartitioning_static
+TARGET_RECOVERY_UPDATER_LIBS += libosip_updater
+TARGET_RECOVERY_UPDATER_EXTRA_LIBS += liboempartitioning_static
 
 # Adb
 BOARD_FUNCTIONFS_HAS_SS_COUNT := true

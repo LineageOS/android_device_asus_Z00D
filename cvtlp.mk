@@ -285,6 +285,12 @@ PRODUCT_PACKAGES += \
     resize2fs_static \
     setup_fs
 
+# Intel_updater
+PRODUCT_PACKAGES += \
+    liboempartitioning_static \
+    libcgpt_static \
+    libosip_updater
+
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
 
