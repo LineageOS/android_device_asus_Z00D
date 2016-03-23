@@ -169,9 +169,6 @@ BUILD_WITH_CHAABI_SUPPORT := true
 # SELinux
 BOARD_SEPOLICY_DIRS += device/asus/cvtlp-common/sepolicy
 
-# Tap-to-Wake
-TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/dclick_mode"
-
 # Wifi
 BOARD_WLAN_DEVICE           := bcmdhd
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
