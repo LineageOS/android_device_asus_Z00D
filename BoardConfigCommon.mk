@@ -189,4 +189,4 @@ WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd.bin"
 endif
 
 # Use the non-open-source parts, if they're present
-$(call inherit-product-if-exists,  vendor/asus/cvtlp-common/BoardConfigVendor.mk)
+-include vendor/asus/cvtlp-common/BoardConfigVendor.mk
