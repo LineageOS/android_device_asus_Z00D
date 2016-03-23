@@ -119,6 +119,7 @@ Only the three quirks included above are recognized at this point:
             <Feature name="secure-playback" required="true" />
             <Limit name="concurrent-instances" max="5" />
         </MediaCodec>
+<!--
         <MediaCodec name="OMX.Intel.VideoDecoder.VP8" type="video/x-vnd.on2.vp8">
             <Limit name="size" min="96x32" max="1920x1088" />
             <Limit name="alignment" value="2x2" />
@@ -155,7 +156,7 @@ Only the three quirks included above are recognized at this point:
             <Feature name="adaptive-playback" />
             <Limit name="concurrent-instances" max="5" />
         </MediaCodec>
-
+-->
        <MediaCodec name="OMX.google.gsm.decoder" type="audio/gsm" />
        <MediaCodec name="OMX.Intel.alac.decoder" type="audio/alac" />
     </Decoders>
