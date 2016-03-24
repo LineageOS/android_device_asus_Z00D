@@ -289,7 +289,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     liboempartitioning_static \
     libcgpt_static \
-    libosip_updater
+    libintel_updater
 
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)

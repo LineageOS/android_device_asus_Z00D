@@ -43,7 +43,7 @@ BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := device/asus/cvtlp-common/mkbootimg.mk
 NEED_KERNEL_MODULE_ROOT := true
 
-TARGET_RECOVERY_UPDATER_LIBS += libosip_updater
+TARGET_RECOVERY_UPDATER_LIBS += libintel_updater
 TARGET_RECOVERY_UPDATER_EXTRA_LIBS += liboempartitioning_static
 
 # Adb
