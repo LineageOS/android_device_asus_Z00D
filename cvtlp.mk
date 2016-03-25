@@ -203,7 +203,9 @@ PRODUCT_PACKAGES += \
     intel_prop \
     intel_prop.cfg \
     thermald \
-    ueventd.$(REF_PRODUCT_NAME).rc
+    ueventd.$(REF_PRODUCT_NAME).rc \
+    gps_daemon.sh \
+    gps_lto.sh
 
 ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
 PRODUCT_PACKAGES += \
