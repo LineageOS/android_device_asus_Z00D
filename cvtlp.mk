@@ -291,6 +291,15 @@ PRODUCT_PACKAGES += \
     libcgpt_static \
     libintel_updater
 
+# Alsa
+PRODUCT_PACKAGES += \
+    tinyplay \
+    tinycap \
+    tinymix
+
+PRODUCT_COPY_FILES += \
+    device/asus/cvtlp-common/audio/silence.wav:system/etc/silence.wav
+
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
 

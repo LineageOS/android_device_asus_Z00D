@@ -412,3 +412,10 @@ service_redefine keystore /system/bin/keystore /data/misc/keystore
     user keystore
     group keystore drmrpc system
     setenv LD_SHIM_LIBS /system/libbinder.so|libstock_crypto.so:/system/lib/hw/keystore.vendor.clovertrail.so|libstock_crypto.so
+
+# Workaround for broken incall audio
+service bootsnd /system/bin/tinyplay /system/etc/silence.wav -D 0 -d 0 -p 880
+    class late_start
+    user root
+    group audio
+    oneshot
