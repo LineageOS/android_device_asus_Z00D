@@ -4,4 +4,4 @@ on property:ro.config.zram=true
     # Avoid evicting pages and use zram disk
     write /proc/sys/vm/swappiness 100
     # Enable swaps described in the fstab
-    swapon_all /fstab.${ro.hardware}
+    swapon_all /fstab.redhookbay
