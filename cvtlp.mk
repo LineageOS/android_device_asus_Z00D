@@ -205,13 +205,9 @@ PRODUCT_PACKAGES += \
     thermald \
     ueventd.$(REF_PRODUCT_NAME).rc \
     gps_daemon.sh \
-    gps_lto.sh
-
-ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
-PRODUCT_PACKAGES += \
+    gps_lto.sh \
     init.compass.rc \
     init.wireless.rc
-endif
 
 # Sensors
 PRODUCT_PACKAGES += \
