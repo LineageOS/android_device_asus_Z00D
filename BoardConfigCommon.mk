@@ -44,6 +44,12 @@ BOARD_CUSTOM_MKBOOTIMG := pack_intel
 BOARD_CUSTOM_BOOTIMG_MK := device/asus/cvtlp-common/mkbootimg.mk
 NEED_KERNEL_MODULE_ROOT := true
 
+# Inline kernel building
+TARGET_KERNEL_SOURCE := kernel/asus/$(TARGET_DEVICE)
+TARGET_KERNEL_ARCH := x86
+BOARD_KERNEL_IMAGE_NAME := bzImage
+TARGET_KERNEL_CONFIG := cyanogenmod_$(TARGET_DEVICE)_defconfig
+
 TARGET_RECOVERY_UPDATER_LIBS += libintel_updater
 TARGET_RECOVERY_UPDATER_EXTRA_LIBS += liboempartitioning_static
 
