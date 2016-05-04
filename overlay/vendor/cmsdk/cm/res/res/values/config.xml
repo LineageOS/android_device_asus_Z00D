@@ -22,8 +22,8 @@
     <bool name="config_proximityCheckOnWakeEnabledByDefault">true</bool>
 
     <!-- Default wi-fi hotspot ssid -->
-    <string name="config_wifiHotSpotSsid" translatable="false">Asus Zenfone Series</string>
+    <string name="config_wifiHotSpotSsid" translatable="false">Asus Zenfone Z25xx</string>
     <!-- Default wi-fi direct name -->
-    <string name="config_wifiDirectName" translatable="false">Asus Zenfone Series</string>
+    <string name="config_wifiDirectName" translatable="false">Asus Zenfone Z25xx</string>
 
 </resources>
