@@ -271,11 +271,6 @@ $(call inherit-product-if-exists, vendor/asus/cvtlp-common/cvtlp-common-vendor.m
 PRODUCT_PACKAGES += \
     libstlport
 
-# OTA Packaging / Bootimg creation
-PRODUCT_PACKAGES += \
-    pack_intel \
-    unpack_intel
-
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \

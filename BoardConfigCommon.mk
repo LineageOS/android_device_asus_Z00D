@@ -40,6 +40,7 @@ TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/cvtlp-common/rele
 
 # OTA Packaging / Bootimg creation
 BOARD_CUSTOM_BOOTIMG := true
+BOARD_CUSTOM_MKBOOTIMG := pack_intel
 BOARD_CUSTOM_BOOTIMG_MK := device/asus/cvtlp-common/mkbootimg.mk
 NEED_KERNEL_MODULE_ROOT := true
 
