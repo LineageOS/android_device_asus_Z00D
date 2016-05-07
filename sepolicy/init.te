@@ -20,3 +20,27 @@ allow init { domain -lmkd }:process noatsecure;
 allow init surfaceflinger:process noatsecure;
 allow init mediaserver:process noatsecure;
 allow init zygote:process noatsecure;
+
+
+#============= init ==============
+allow init ashmem_device:chr_file execute;
+allow init gpu_device:chr_file { write ioctl };
+allow init graphics_device:chr_file { write ioctl };
+
+allow init rootfs:file rw_file_perms;
+
+allow init app_data_file:file rw_file_perms;
+allow init app_data_file:dir { rw_dir_perms relabelto };
+
+allow init kernel:system module_request;
+allow init self:capability sys_module;
+
+
+allow init self:process execmem;
+allow init init:tcp_socket { create };
+allow init block_device:blk_file { create write relabelfrom };
+allow init block_device:lnk_file { create write rename };
+allow init system_block_device:blk_file { relabelto };
+allow init userdata_block_device:blk_file { relabelto };
+allow init cache_block_device:blk_file { relabelto };
+allow init socket_device:sock_file rw_file_perms;
