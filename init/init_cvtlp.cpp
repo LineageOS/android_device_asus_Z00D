@@ -26,7 +26,7 @@
 #include "util.h"
 #include "vendor_init.h"
 
-#define PHONE_INFO "/factory/PhoneInfodisk/PhoneInfo_inf"
+#define PHONE_INFO "/factory/SSN"
 
 /* Serial number */
 #define SERIAL_PROP "ro.serialno"
