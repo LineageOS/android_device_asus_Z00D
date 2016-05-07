@@ -14,14 +14,18 @@
 # limitations under the License.
 
 """Custom OTA commands for ASUS ZENFONE 4 5 6 devices"""
+"""Custom OTA commands for ASUS ZENFONE device Z25xx"""
 import common
 import struct
 
 def FullOTA_PostValidate(info):
+	info.script.Print("Validate system partitions now ...")
 	# run e2fsck
 	info.script.AppendExtra('run_program("/sbin/e2fsck", "-fy", "/dev/block/mmcblk0p9");');
+	info.script.Print("Resize . . .")
 	# resize2fs: run and delete
 	info.script.AppendExtra('run_program("/tmp/install/bin/resize2fs_static", "/dev/block/mmcblk0p9");');
+	info.script.Print("Run e2fsck . . .")
 	# run e2fsck
 	info.script.AppendExtra('run_program("/sbin/e2fsck", "-fy", "/dev/block/mmcblk0p9");');
 
