@@ -28,7 +28,7 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) \
 		$(recovery_ramdisk)
 	$(call pretty,"Target recovery image: $@")
 	@echo -e ${CL_CYN}"----- Making recovery osimage ------"${CL_RST}
-	$(MKBOOTIMG) $(BASE_RECOVERY_IMAGE) $(recovery_kernel) $(BOARD_KERNEL_CMDLINE) $@
+	$(MKBOOTIMG) $(BASE_RECOVERY_IMAGE) $(recovery_kernel) $(recovery_ramdisk) $(BOARD_KERNEL_CMDLINE) $@
 	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE))
 
