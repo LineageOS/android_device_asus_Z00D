@@ -107,11 +107,11 @@ PRODUCT_COPY_FILES += \
 
 # Keystore
 PRODUCT_PACKAGES += \
-    keystore.$(TARGET_BOARD_PLATFORM)
+    keystore.clovertrail
 
 # Lights
 PRODUCT_PACKAGES += \
-    lights.$(TARGET_BOARD_PLATFORM)
+    lights.clovertrail
 
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
