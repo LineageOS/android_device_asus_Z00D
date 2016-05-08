@@ -55,7 +55,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Camera
 PRODUCT_PACKAGES += \
     bspcapability \
-    camera.$(REF_PRODUCT_NAME) \
+    camera.redhookbay \
     libshim_camera \
     Snap
 
@@ -162,7 +162,7 @@ PRODUCT_PACKAGES += \
 
 # PowerHAL
 PRODUCT_PACKAGES += \
-    power.$(REF_PRODUCT_NAME)
+    power.redhookbay
 
 # Radio
 PRODUCT_PACKAGES += \
@@ -178,7 +178,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     config_init.sh \
-    fstab.$(REF_PRODUCT_NAME) \
+    fstab.redhookbay \
     init.avc.rc \
     init.bt.rc \
     init.bt.vendor.rc \
@@ -191,10 +191,10 @@ PRODUCT_PACKAGES += \
     init.gps.rc \
     init.logtool.rc \
     init.modem.rc \
-    init.$(REF_PRODUCT_NAME).rc \
+    init.redhookbay.rc \
     init.platform.usb.rc \
-    init.power.$(REF_PRODUCT_NAME).rc \
-    init.recovery.$(REF_PRODUCT_NAME).rc \
+    init.power.redhookbay.rc \
+    init.recovery.redhookbay.rc \
     init.watchdog.rc \
     init.wifi.rc \
     init.wifi.vendor.rc \
@@ -202,7 +202,7 @@ PRODUCT_PACKAGES += \
     intel_prop \
     intel_prop.cfg \
     thermald \
-    ueventd.$(REF_PRODUCT_NAME).rc \
+    ueventd.redhookbay.rc \
     gps_daemon.sh \
     gps_lto.sh \
     init.compass.rc \
