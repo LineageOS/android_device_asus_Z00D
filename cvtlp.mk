@@ -271,12 +271,6 @@ $(call inherit-product-if-exists, vendor/asus/cvtlp-common/cvtlp-common-vendor.m
 PRODUCT_PACKAGES += \
     libstlport
 
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    make_ext4fs \
-    resize2fs_static \
-    setup_fs
-
 # Intel_updater
 PRODUCT_PACKAGES += \
     liboempartitioning_static \

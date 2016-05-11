@@ -32,11 +32,7 @@ TARGET_SPECIFIC_HEADER_PATH := device/asus/cvtlp-common/include
 
 TARGET_DROIDBOOT_LIBS := libintel_droidboot
 
-# Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := ./device/asus/cvtlp-common/releasetools/extensions
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/asus/cvtlp-common/releasetools/zenfone_ota_from_target_files
-TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/asus/cvtlp-common/releasetools/zenfone_img_from_target_files
-TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/cvtlp-common/releasetools/make_recovery_patch
+TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/cvtlp-common/make_recovery_patch
 
 # OTA Packaging / Bootimg creation
 BOARD_CUSTOM_BOOTIMG := true
