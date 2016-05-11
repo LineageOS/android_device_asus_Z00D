@@ -27,17 +27,17 @@ TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
 # Specific headers
-TARGET_BOARD_KERNEL_HEADERS := device/asus/cvtlp-common/kernel-headers
-TARGET_SPECIFIC_HEADER_PATH := device/asus/cvtlp-common/include
+TARGET_BOARD_KERNEL_HEADERS := device/asus/ctp-common/kernel-headers
+TARGET_SPECIFIC_HEADER_PATH := device/asus/ctp-common/include
 
 TARGET_DROIDBOOT_LIBS := libintel_droidboot
 
-TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/cvtlp-common/make_recovery_patch
+TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/ctp-common/make_recovery_patch
 
 # OTA Packaging / Bootimg creation
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_MKBOOTIMG := pack_intel
-BOARD_CUSTOM_BOOTIMG_MK := device/asus/cvtlp-common/mkbootimg.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/asus/ctp-common/mkbootimg.mk
 NEED_KERNEL_MODULE_ROOT := true
 
 # Inline kernel building
@@ -69,7 +69,7 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/cvtlp-common/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/ctp-common/bluetooth
 
 # Bootloader
 ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
@@ -87,7 +87,7 @@ TARGET_PROVIDES_CAMERA_HAL := true
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_SHOW_PERCENTAGE := true
-BOARD_HEALTHD_CUSTOM_CHARGER_RES := device/asus/cvtlp-common/charger/images
+BOARD_HEALTHD_CUSTOM_CHARGER_RES := device/asus/ctp-common/charger/images
 
 # Dex-preoptimization: Speeds up initial boot (if we ever o a user build, which we don't)
 ifeq ($(HOST_OS),linux)
@@ -99,7 +99,7 @@ ifeq ($(HOST_OS),linux)
 endif
 
 # Hardware
-BOARD_HARDWARE_CLASS := device/asus/cvtlp-common/cmhw
+BOARD_HARDWARE_CLASS := device/asus/ctp-common/cmhw
 
 # Healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.clovertrail
@@ -119,7 +119,7 @@ SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 
 # Opengles
 COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH -DWORKAROUND_BUG_10194508
-BOARD_EGL_CFG := device/asus/cvtlp-common/configs/egl.cfg
+BOARD_EGL_CFG := device/asus/ctp-common/configs/egl.cfg
 
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.opengles.version = 131072
@@ -138,8 +138,8 @@ USE_OPENGL_RENDERER := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
 
 # Init
-TARGET_INIT_VENDOR_LIB := libinit_cvtlp
-TARGET_LIBINIT_DEFINES_FILE := device/asus/cvtlp-common/init/init_cvtlp.cpp
+TARGET_INIT_VENDOR_LIB := libinit_ctp
+TARGET_LIBINIT_DEFINES_FILE := device/asus/ctp-common/init/init_ctp.cpp
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -160,7 +160,7 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 1677721600
 
 # PowerHAL
-TARGET_POWERHAL_VARIANT := mofd_v1
+TARGET_POWERHAL_VARIANT := redhookbay
 
 # Radio
 BOARD_PROVIDES_LIBRIL := true
@@ -169,15 +169,15 @@ BOARD_PROVIDES_LIBRIL := true
 BOARD_CANT_BUILD_RECOVERY_FROM_BOOT_PATCH := true
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-TARGET_RECOVERY_FSTAB := device/asus/cvtlp-common/rootdir/etc/fstab.redhookbay
-TARGET_RECOVERY_DEVICE_MODULES := libinit_cvtlp librecovery_updater_cvtlp intel_prop thermald upi_ug31xx
+TARGET_RECOVERY_FSTAB := device/asus/ctp-common/rootdir/etc/fstab.redhookbay
+TARGET_RECOVERY_DEVICE_MODULES := libinit_ctp librecovery_updater_ctp intel_prop thermald upi_ug31xx
 
 # Security
 BUILD_WITH_SECURITY_FRAMEWORK := chaabi_token
 BUILD_WITH_CHAABI_SUPPORT := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += device/asus/cvtlp-common/sepolicy
+BOARD_SEPOLICY_DIRS += device/asus/ctp-common/sepolicy
 
 # Wifi
 BOARD_WLAN_DEVICE           := bcmdhd
@@ -199,4 +199,4 @@ WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd.bin"
 endif
 
 # Use the non-open-source parts, if they're present
--include vendor/asus/cvtlp-common/BoardConfigVendor.mk
+-include vendor/asus/ctp-common/BoardConfigVendor.mk

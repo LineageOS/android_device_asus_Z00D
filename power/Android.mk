@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_POWERHAL_VARIANT),mofd_v1)
+ifeq ($(TARGET_POWERHAL_VARIANT),redhookbay)
 
 LOCAL_PATH := $(call my-dir)
 

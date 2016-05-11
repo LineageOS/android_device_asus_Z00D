@@ -110,10 +110,10 @@ PRODUCT_COPY_FILES += \\
 EOF
 
 LINEEND=" \\"
-COUNT=`wc -l ../cvtlp-common/proprietary-files.txt | awk {'print $1'}`
-DISM=`egrep -c '(^#|^$)' ../cvtlp-common/proprietary-files.txt`
+COUNT=`wc -l ../ctp-common/proprietary-files.txt | awk {'print $1'}`
+DISM=`egrep -c '(^#|^$)' ../ctp-common/proprietary-files.txt`
 COUNT=`expr $COUNT - $DISM`
-for FILE in `egrep -v '(^#|^$)' ../cvtlp-common/proprietary-files.txt`; do
+for FILE in `egrep -v '(^#|^$)' ../ctp-common/proprietary-files.txt`; do
   COUNT=`expr $COUNT - 1`
   if [ $COUNT = "0" ]; then
     LINEEND=""

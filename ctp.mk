@@ -21,7 +21,7 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalv
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 DEVICE_PACKAGE_OVERLAYS := \
-    device/asus/cvtlp-common/overlay
+    device/asus/ctp-common/overlay
 
 # Art
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -41,13 +41,13 @@ PRODUCT_PACKAGES += \
     audio.usb.default
 
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/audio/asound.conf:system/etc/asound.conf \
-    device/asus/cvtlp-common/audio/audio_policy.conf:system/etc/audio_policy.conf \
-    device/asus/cvtlp-common/audio/route_criteria.conf:system/etc/route_criteria.conf
+    device/asus/ctp-common/audio/asound.conf:system/etc/asound.conf \
+    device/asus/ctp-common/audio/audio_policy.conf:system/etc/audio_policy.conf \
+    device/asus/ctp-common/audio/route_criteria.conf:system/etc/route_criteria.conf
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+    device/asus/ctp-common/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 PRODUCT_PROPERTY_OVERRIDES += \
     bt.hfp.WideBandSpeechEnabled=true
@@ -78,8 +78,8 @@ PRODUCT_PACKAGES += \
     libshim_gps
 
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/configs/gps.conf:system/etc/gps.conf \
-    device/asus/cvtlp-common/configs/gpsconfig.xml:system/etc/gpsconfig.xml
+    device/asus/ctp-common/configs/gps.conf:system/etc/gps.conf \
+    device/asus/ctp-common/configs/gpsconfig.xml:system/etc/gpsconfig.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.spid.gps.tty=ttyMFD3
@@ -97,13 +97,13 @@ PRODUCT_PACKAGES += \
 
 # Key layout files
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/keylayout/synaptics_dsx.kcm:system/usr/keychars/synaptics_dsx.kcm \
-    device/asus/cvtlp-common/keylayout/synaptics_dsx.kl:system/usr/keylayout/synaptics_dsx.kl \
-    device/asus/cvtlp-common/keylayout/cloverview_audio_Intel_MID_Audio_Jack.kl:system/usr/keylayout/cloverview_audio_Intel_MID_Audio_Jack.kl \
-    device/asus/cvtlp-common/keylayout/ASUS_TransKeyboard.kl:system/usr/keylayout/ASUS_TransKeyboard.kl \
-    device/asus/cvtlp-common/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    device/asus/cvtlp-common/keylayout/Vendor_0b05_Product_17fc.kl:system/usr/keylayout/Vendor_0b05_Product_17fc.kl \
-    device/asus/cvtlp-common/keylayout/Vendor_0b05_Product_1803.kl:system/usr/keylayout/Vendor_0b05_Product_1803.kl
+    device/asus/ctp-common/keylayout/synaptics_dsx.kcm:system/usr/keychars/synaptics_dsx.kcm \
+    device/asus/ctp-common/keylayout/synaptics_dsx.kl:system/usr/keylayout/synaptics_dsx.kl \
+    device/asus/ctp-common/keylayout/cloverview_audio_Intel_MID_Audio_Jack.kl:system/usr/keylayout/cloverview_audio_Intel_MID_Audio_Jack.kl \
+    device/asus/ctp-common/keylayout/ASUS_TransKeyboard.kl:system/usr/keylayout/ASUS_TransKeyboard.kl \
+    device/asus/ctp-common/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    device/asus/ctp-common/keylayout/Vendor_0b05_Product_17fc.kl:system/usr/keylayout/Vendor_0b05_Product_17fc.kl \
+    device/asus/ctp-common/keylayout/Vendor_0b05_Product_1803.kl:system/usr/keylayout/Vendor_0b05_Product_1803.kl
 
 # Keystore
 PRODUCT_PACKAGES += \
@@ -119,9 +119,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.widevine.cachesize=16777216
 
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/media/media_codecs.xml:system/etc/media_codecs.xml \
-    device/asus/cvtlp-common/media/media_profiles.xml:system/etc/media_profiles.xml \
-    device/asus/cvtlp-common/media/wrs_omxil_components.list:system/etc/wrs_omxil_components.list \
+    device/asus/ctp-common/media/media_codecs.xml:system/etc/media_codecs.xml \
+    device/asus/ctp-common/media/media_profiles.xml:system/etc/media_profiles.xml \
+    device/asus/ctp-common/media/wrs_omxil_components.list:system/etc/wrs_omxil_components.list \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
@@ -213,7 +213,7 @@ PRODUCT_PACKAGES += \
     libshim_sensors
 
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
+    device/asus/ctp-common/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
 
 # Thermal itux
 ENABLE_ITUXD := true
@@ -263,9 +263,9 @@ PRODUCT_PACKAGES += \
     wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+    device/asus/ctp-common/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
-$(call inherit-product-if-exists, vendor/asus/cvtlp-common/cvtlp-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/asus/ctp-common/ctp-common-vendor.mk)
 
 # stlport required for our LP blobs
 PRODUCT_PACKAGES += \
@@ -284,7 +284,7 @@ PRODUCT_PACKAGES += \
     tinymix
 
 PRODUCT_COPY_FILES += \
-    device/asus/cvtlp-common/audio/silence.wav:system/etc/silence.wav
+    device/asus/ctp-common/audio/silence.wav:system/etc/silence.wav
 
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
