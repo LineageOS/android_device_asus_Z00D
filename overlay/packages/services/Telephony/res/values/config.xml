@@ -16,8 +16,6 @@
 
 <resources>
 
-    <!-- Show enabled lte option for lte device -->
-    <bool name="config_enabled_lte" translatable="false">true</bool>
     <!-- Enable the onscreen "Dial" button in the emergency dialer. -->
     <bool name="config_show_onscreen_dial_button">true</bool>
 
