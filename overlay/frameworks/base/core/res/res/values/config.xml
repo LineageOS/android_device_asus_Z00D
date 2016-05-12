@@ -379,4 +379,11 @@
     <!-- If this is true, the screen will fade off. -->
     <bool name="config_animateScreenLights">true</bool>
 
+    <!-- Default list of files pinned by the Pinner Service -->
+    <string-array translatable="false" name="config_defaultPinnerServiceFiles">
+        <item>"/system/framework/x86/boot-framework.oat"</item>
+        <item>"/system/framework/oat/x86/services.odex"</item>
+        <item>"/system/framework/x86/boot.oat"</item>
+        <item>"/system/framework/x86/boot-core-libart.oat"</item>
+    </string-array>
 </resources>
