@@ -215,11 +215,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/asus/ctp-common/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
 
-# Thermal itux
-ENABLE_ITUXD := true
-PRODUCT_PACKAGES += \
-    ituxd
-
 # pvr
 PRODUCT_PACKAGES += \
     libpvr2d
