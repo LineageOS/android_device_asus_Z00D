@@ -5,10 +5,10 @@ service akmd  /system/bin/akmd09911 -m 1
     group system misc input
     oneshot
 
-on property:ro.product.device=ASUS_T00J
+on property:ro.product.device=T00J
     start akmd
 
-on property:ro.product.device=ASUS_T00F
+on property:ro.product.device=T00F
     start akmd
 
 
@@ -19,5 +19,5 @@ service akmd_a600cg  /system/bin/a600cg_akmd09911 -m 2
     group system misc input
     oneshot
 
-on property:ro.product.device=ASUS_T00G
+on property:ro.product.device=T00G
     start akmd_a600cg
