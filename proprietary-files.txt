@@ -257,20 +257,32 @@ etc/telephony/XMM7260_CONF_9.xml
 # Thermal
 bin/thermald
 
+etc/parameter-framework/ParameterFrameworkConfiguration.ER.xml
+etc/parameter-framework/ParameterFrameworkConfigurationRoute.xml
+etc/parameter-framework/ParameterFrameworkConfiguration.SR.xml
+etc/parameter-framework/ParameterFrameworkConfigurationVibrator.xml
+etc/parameter-framework/ParameterFrameworkConfiguration.xml
+etc/parameter-framework/Settings/Audio/AudioConfigurableDomains.ER.xml
+etc/parameter-framework/Settings/Audio/AudioConfigurableDomains.SR.xml
+etc/parameter-framework/Settings/Audio/AudioConfigurableDomains.xml
+etc/parameter-framework/Settings/Route/RouteConfigurableDomains.xml
 etc/parameter-framework/Settings/Vibrator/VibratorConfigurableDomains.xml
+etc/parameter-framework/Structure/Audio/AudioClass.xml
 etc/parameter-framework/Structure/Audio/ConfigurationSubsystem.xml
+etc/parameter-framework/Structure/Audio/IMCSubsystem.xml
 etc/parameter-framework/Structure/Audio/IntelSSPSubsystem.xml
 etc/parameter-framework/Structure/Audio/LPEMixerSubsystem.xml
+etc/parameter-framework/Structure/Audio/LPESubsystem.xml
+etc/parameter-framework/Structure/Audio/Realtek_RT5647.xml
 etc/parameter-framework/Structure/Audio/SysfsPmdownTimeSubsystem.xml
 etc/parameter-framework/Structure/Route/DebugFsSubsystem.xml
 etc/parameter-framework/Structure/Route/RouteClass.xml
-etc/parameter-framework/Structure/Route/RouteSubsystem.xml
+etc/parameter-framework/Structure/Route/RouteSubsystem-CommonCriteria.xml
 etc/parameter-framework/Structure/Route/RouteSubsystem-RoutesTypes.xml
+etc/parameter-framework/Structure/Route/RouteSubsystem.xml
 etc/parameter-framework/Structure/Vibrator/MiscConfigurationSubsystem.xml
 etc/parameter-framework/Structure/Vibrator/SysfsVibratorClass.xml
 etc/parameter-framework/Structure/Vibrator/SysfsVibratorSubsystem.xml
-etc/parameter-framework/ParameterFrameworkConfigurationRoute.xml
-etc/parameter-framework/ParameterFrameworkConfigurationVibrator.xml
 
 lib/parameter-framework-plugins/Audio/libaudience-subsystem.so
 lib/parameter-framework-plugins/Audio/libimc-subsystem.so
