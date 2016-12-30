@@ -385,5 +385,7 @@
         <item>"/system/framework/oat/x86/services.odex"</item>
         <item>"/system/framework/x86/boot.oat"</item>
         <item>"/system/framework/x86/boot-core-libart.oat"</item>
+        <item>"/data/dalvik-cache/x86/system@framework@boot.oat"</item>
+        <item>"/data/dalvik-cache/x86/system@framework@services.jar@classes.dex"</item>
     </string-array>
 </resources>
