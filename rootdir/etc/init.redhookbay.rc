@@ -234,6 +234,7 @@ on post-fs
 # Permissions for BCU sysfs interface and make generic path to access by apps
 #    chown system system /sys/devices/platform/bcove_bcu/camflash_ctrl
 #    symlink /sys/devices/platform/bcove_bcu /dev/bcu
+    restorecon /config
     restorecon_recursive /factory
     restorecon_recursive /config
     restorecon_recursive /logs
