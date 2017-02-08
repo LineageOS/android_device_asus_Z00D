@@ -335,6 +335,8 @@ static char *camera_fixup_getparams(int id, const char *settings)
     params.dump();
 #endif
 
+    params.set("touch-af-aec-values", "touch-off,touch-on");
+
     android::String8 strParams = params.flatten();
     char *ret = strdup(strParams.string());
 
