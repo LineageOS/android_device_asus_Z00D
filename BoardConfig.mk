@@ -39,7 +39,6 @@ BOARD_CUSTOM_MKBOOTIMG := pack_intel
 BOARD_CUSTOM_BOOTIMG_MK := device/asus/Z00D/mkbootimg.mk
 DEVICE_BASE_BOOT_IMAGE := device/asus/Z00D/base_images/boot.img
 DEVICE_BASE_RECOVERY_IMAGE := device/asus/Z00D/base_images/recovery.img
-NEED_KERNEL_MODULE_ROOT := true
 
 # Inline kernel building
 TARGET_KERNEL_SOURCE := kernel/asus/Z00D

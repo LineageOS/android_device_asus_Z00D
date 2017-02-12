@@ -28,8 +28,3 @@ on post-fs-data
 #    chown system system /data/asusdata/psensor_hi.nv
 #    chown system system /data/asusdata/psensor_low.nv
 
-on boot
-    #Load BCM Wifi kernel module for pf450cl at boot time
-    #insmod /lib/modules/bcmdhd.ko
-    insmod /lib/modules/bcmdhd.ko firmware_path="/asusfw/wifi/fw_bcmdhd.bin" nvram_path="/asusfw/wifi/bcmdhd_aob.cal"
-
