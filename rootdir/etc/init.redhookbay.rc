@@ -338,15 +338,6 @@ on charger
     mount ext4 /dev/block/by-name/logs /logs nosuid nodev barrier=1,data=ordered
 
     start watchdogd
-    insmod /lib/modules/imx111.ko
-    insmod /lib/modules/t4k35.ko
-    insmod /lib/modules/t4k35_180.ko
-    
-    insmod /lib/modules/t4k37.ko
-    insmod /lib/modules/mn34130.ko  
-    
-    
-    insmod /lib/modules/atomisp-css2300.ko
 
     # Invoke fuel gauging helper binary to restore config data
     #symlink /dev/max170xx /dev/fg
