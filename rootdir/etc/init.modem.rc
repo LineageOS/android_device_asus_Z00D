@@ -30,21 +30,6 @@ service proxy-tunneling /system/bin/proxy -d /dev/gsmtty1 -m /dev/gsmtty10 -t on
     group radio system cache inet misc
     disabled
 
-# AT proxy2 service
-service proxy2 /system/bin/proxy -d /dev/gsmtty65 -m /dev/gsmtty74 -i 2
-    socket atproxy-status2 stream 666 root radio system
-    class main
-    user radio
-    group radio system cache inet misc
-    disabled
-
-# AT proxy2 tunneling mode service
-    service proxy-tunneling2 /system/bin/proxy -d /dev/gsmtty65 -m /dev/gsmtty74 -t on -i 2
-    class main
-    user radio
-    group radio system cache inet misc
-    disabled
-
 # AT proxy USB reset utility service
 service atproxy_usbreset /system/bin/atproxy_usbreset
     oneshot
@@ -73,20 +58,6 @@ service mtso /system/bin/mts
     oneshot
     disabled
 
-# mts2 persistent
-service mtsp2 /system/bin/mts -m 2
-    user radio
-    group system radio log media_rw sdcard_r sdcard_rw inet
-    disabled
-
-# mts oneshot
-service mtso2 /system/bin/mts -m 2
-    user radio
-    group system radio log media_rw sdcard_rw inet
-    oneshot
-    disabled
-
-
 # MTS Properties, events trigging service
 
 on property:persist.service.mtsp.enable=1
@@ -95,51 +66,35 @@ on property:persist.service.mtsp.enable=1
 on property:persist.service.mtsp.enable=0
     stop mtsp
 
-on property:persist.sys.mtsp2.enable=1
-    start mtsp2
-
-on property:persist.sys.mtsp2.enable=0
-    stop mtsp2
-
 on property:persist.system.at-proxy.mode=*
 setprop system.at-proxy.mode ${persist.system.at-proxy.mode}
 
 on property:system.at-proxy.mode=0
     stop proxy
-    stop proxy2
     stop proxy-tunneling
-    stop proxy-tunneling2
     start atproxy_usbreset
 
 on property:system.at-proxy.mode=1
     stop ad_proxy
     stop proxy-tunneling
-    stop proxy-tunneling2
-    stop proxy2
     setprop sys.usb.config rndis,acm,adb
     start proxy
 
 on property:system.at-proxy.mode=2
     stop ad_proxy
     stop proxy
-    stop proxy2
-    stop proxy-tunneling2
     setprop sys.usb.config rndis,acm,adb
     start proxy-tunneling
 
 on property:system.at-proxy.mode=3
     stop proxy-tunneling
-    stop proxy-tunneling2
     stop proxy
     setprop sys.usb.config rndis,acm,adb
-    start proxy2
 
 on property:system.at-proxy.mode=4
     stop proxy
-    stop proxy2
     stop proxy-tunneling
     setprop sys.usb.config rndis,acm,adb
-    start proxy-tunneling2
 
 on boot
 #  Permissions for modem_nvram files used for pin caching
@@ -199,14 +154,6 @@ service ril-daemon /system/bin/rild
     socket rild stream 660 root radio
     socket sap_uim_socket1 stream 660 bluetooth bluetooth
     socket rild-debug stream 660 radio system
-    user root
-    group radio cache inet misc audio log qcom_diag readproc wakelock
-
-# adding 2nd vendor ril instance in case of multi sim
-service ril-daemon1 /system/bin/rild -c 2
-    class late_start
-    socket rild2 stream 660 root radio
-    socket rild-debug2 stream 660 radio system
     user root
     group radio cache inet misc audio log qcom_diag readproc wakelock
 
