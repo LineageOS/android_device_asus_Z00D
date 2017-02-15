@@ -69,7 +69,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Display
 PRODUCT_PACKAGES += \
     pvr_drv_video \
-    libshim_hwc
+    libgbf
 
 # GPS
 PRODUCT_PACKAGES += \
