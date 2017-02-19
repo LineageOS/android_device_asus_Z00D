@@ -77,6 +77,9 @@
 /sys/devices/system/cpu/cpufreq interactive/touchboost_freq             0644 system system
 /sys/devices/system/cpu/cpufreq interactive/touchboostpulse             0220 system system
 /sys/devices/system/cpu/cpufreq interactive/touchboostpulse_duration    0644 system system
+/sys/devices/system/cpu/cpufreq interactive/boostpulse                  0220 system system
+/sys/devices/system/cpu/cpufreq interactive/boost                       0220 system system
+
 # Thermal Management
 /sys/devices/platform/coretemp*              temp2_threshold1   0644  system  system
 /sys/devices/platform/coretemp*              temp2_threshold2   0644  system  system

@@ -33,7 +33,7 @@
 #define BIAS_PERF_MIN_FREQ 1333000
 #define NORMAL_MAX_FREQ 1600000
 
-static pthread_mutex_t profile_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 enum {
     PROFILE_POWER_SAVE = 0,
@@ -65,6 +65,9 @@ struct local_power_module {
 };
 
 #define BUF_SIZE 80
+#define BOOSTPULSE_PATH "/sys/devices/system/cpu/cpufreq/interactive/boostpulse"
+#define TOUCHBOOSTPULSE_PATH "/sys/devices/system/cpu/cpufreq/interactive/touchboostpulse"
+#define BOOST_PATH "/sys/devices/system/cpu/cpufreq/interactive/boost"
 
 static int sysfs_read(const char *path, char buf[BUF_SIZE]) {
     int len;
@@ -132,6 +135,16 @@ static void power_init(struct power_module *) {
 
 }
 
+static void boost(int32_t duration) {
+    if (duration < 1)
+	return;
+
+    sysfs_write(BOOST_PATH, "1");
+    usleep(duration);
+    sysfs_write(BOOST_PATH, "0");
+}
+
+
 static void set_power_profile(int profile) {
     int min_freq = POWERSAVE_MIN_FREQ;
     int max_freq = NORMAL_MAX_FREQ;
@@ -171,9 +184,9 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
                       power_hint_t hint, void *data)
 {
     if (hint == POWER_HINT_SET_PROFILE) {
-        pthread_mutex_lock(&profile_lock);
+        pthread_mutex_lock(&lock);
         set_power_profile(*(int32_t *)data);
-        pthread_mutex_unlock(&profile_lock);
+        pthread_mutex_unlock(&lock);
         return;
     }
 
@@ -181,10 +194,19 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
     if (current_power_profile == PROFILE_POWER_SAVE)
         return;
 
-    // unimplemented for now
     switch (hint) {
     case POWER_HINT_INTERACTION:
-        break;
+    case POWER_HINT_LAUNCH:
+	pthread_mutex_lock(&lock);
+	sysfs_write(BOOSTPULSE_PATH, "1");
+	pthread_mutex_unlock(&lock);
+	break;
+
+    case POWER_HINT_CPU_BOOST:
+	pthread_mutex_lock(&lock);
+	boost(*(int32_t *)data);
+	pthread_mutex_unlock(&lock);
+	break;
 
     case POWER_HINT_VSYNC:
         break;
