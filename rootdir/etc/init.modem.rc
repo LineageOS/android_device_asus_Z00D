@@ -14,88 +14,6 @@ on init
     chmod 0660 /sys/module/hsi_dlp/parameters/set_flashing_mode
     chown root radio /sys/module/hsi_dlp/parameters/set_flashing_mode
 
-# AT proxy service
-service proxy /system/bin/proxy -d /dev/gsmtty1 -m /dev/gsmtty10
-    socket atproxy-status stream 660 system radio
-    socket atproxy-apb stream 660 radio system
-    class main
-    user radio
-    group radio system cache inet misc
-    disabled
-
-# AT proxy tunneling mode service
-service proxy-tunneling /system/bin/proxy -d /dev/gsmtty1 -m /dev/gsmtty10 -t on
-    class main
-    user radio
-    group radio system cache inet misc
-    disabled
-
-# AT proxy USB reset utility service
-service atproxy_usbreset /system/bin/atproxy_usbreset
-    oneshot
-    user radio
-    disabled
-
-# MTS SERVICES
-
-#logging over pti
-service pti_sigusr1 /system/bin/pti_sigusr1
-    user system
-    group radio log media_rw sdcard_rw inet
-    oneshot
-    disabled
-
-# mts persistent
-service mtsp /system/bin/mts
-    user system
-    group radio log media_rw sdcard_r sdcard_rw inet
-    disabled
-
-# mts oneshot
-service mtso /system/bin/mts
-    user system
-    group radio log media_rw sdcard_rw inet
-    oneshot
-    disabled
-
-# MTS Properties, events trigging service
-
-on property:persist.service.mtsp.enable=1
-    start mtsp
-
-on property:persist.service.mtsp.enable=0
-    stop mtsp
-
-on property:persist.system.at-proxy.mode=*
-setprop system.at-proxy.mode ${persist.system.at-proxy.mode}
-
-on property:system.at-proxy.mode=0
-    stop proxy
-    stop proxy-tunneling
-    start atproxy_usbreset
-
-on property:system.at-proxy.mode=1
-    stop ad_proxy
-    stop proxy-tunneling
-    setprop sys.usb.config rndis,acm,adb
-    start proxy
-
-on property:system.at-proxy.mode=2
-    stop ad_proxy
-    stop proxy
-    setprop sys.usb.config rndis,acm,adb
-    start proxy-tunneling
-
-on property:system.at-proxy.mode=3
-    stop proxy-tunneling
-    stop proxy
-    setprop sys.usb.config rndis,acm,adb
-
-on property:system.at-proxy.mode=4
-    stop proxy
-    stop proxy-tunneling
-    setprop sys.usb.config rndis,acm,adb
-
 on boot
 #  Permissions for modem_nvram files used for pin caching
     chmod 0770 /sys/kernel/modem_nvram
@@ -157,14 +75,6 @@ service ril-daemon /system/bin/rild
     user root
     group radio cache inet misc audio log qcom_diag readproc wakelock
 
-service modem-c_main-sh /system/bin/init.class_main.sh
-    class main
-    user root
-    oneshot
-    disabled
-
-on property:vold.decrypt=trigger_restart_framework
-    start modem-c_main-sh
 
 on property:persist.disable_NVM_Server=1
     stop nvmmanager

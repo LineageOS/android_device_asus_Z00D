@@ -9,8 +9,6 @@ import init.gps.rc
 import init.compass.rc
 import init.bt.rc
 import init.modem.rc
-import init.logtool.rc
-import init.product.rc
 import init.asus.rc
 
 on early-init
@@ -49,10 +47,6 @@ on init
 
     mkdir /factory
     mkdir /config
-    #mkdir /logs
-
-    #  Mount the sep filesystem
-    mount sepfs sepfs /sys/fs/sepfs
 
     # Configure the proper cpusets
     write /dev/cpuset/system-background/cpus 0-3
@@ -79,11 +73,6 @@ on boot
 #   Disable audio offloading
     setprop audio.offload.disable 1
 
- #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/control
- #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/data
- #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/data_size
- #   chown system system /sys/class/pci_bus/0000:00/device/0000:00:16.1/fw_version
-
 # Lte coexistence ( can be enabled the following: NRT / NRT+RT )
 # Enable LTE Coexistence NRT (Non Real Time)
     setprop persist.service.cwsmgr.coex 1
@@ -106,7 +95,7 @@ on boot
 #  Enable slow-motion playback
     setprop video.playback.slow-motion 1
 
-    #set dirty background bytes to 24MB to reduce USB MTP write latencies
+# set dirty background bytes to 24MB to reduce USB MTP write latencies
     write /proc/sys/vm/dirty_background_bytes 25165824
 
 # Set debugfs ownership to media
@@ -122,18 +111,10 @@ on post-fs-data
 
     mkdir /data/misc/firmware 0770 system system
 
-    #Invoke fuel gauging helper binary to restore config data
-    #chmod 0770 /dev/max170xx
-    #chown system system /dev/max170xx
-    #symlink /dev/max170xx /dev/fg
-    #chown system system /sys/class/power_supply/max17047_battery/model_name
-    #chown system system /sys/class/power_supply/max17047_battery/serial_number
-    #start fg_conf
-
     mkdir /data/logs
     chown system log /data/logs
     chmod 0770 /data/logs
-    # symlink /data/logs /logs
+
     # Enable Dynamic Turbo feature
     setprop persist.thermal.turbo.dynamic 1
 
@@ -153,10 +134,6 @@ on post-fs
     chown system system /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
     chmod 0660 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
 
-
-# hall sensor
-    chown system system /sys/kernel/hall_sensor_kobject/hall_sensor/activity
-
     # Volume keys wakeup capability
     chmod 0664 /sys/devices/platform/gpio-keys/enabled_wakeup
     chmod 0664 /sys/devices/platform/gpio-keys/disabled_wakeup
@@ -164,153 +141,27 @@ on post-fs
     chown media system /sys/devices/platform/gpio-keys/disabled_wakeup
 
 #  Permissions for Sensors
-    #general sensor
-    chown system system /sys/devices/generalsensor/start
-    chown system system /sys/devices/generalsensor/dbglevel
-    chown system system /sys/devices/generalsensor/dbgsensors
 
-    #start general sensor driver
-    write /sys/devices/generalsensor/start 1
-
-    # accelerometer lsm303dlhc
-    chown system system /sys/bus/i2c/devices/5-0019/enable
-    chown system system /sys/bus/i2c/devices/5-0019/poll
-    chown system system /sys/bus/i2c/devices/5-0019/lis3dh/enable
-    chown system system /sys/bus/i2c/devices/5-0019/lis3dh/poll
-
-    #barometer lps331ap
-    chown system system /sys/bus/i2c/devices/5-005c/enable
-    chown system system /sys/bus/i2c/devices/5-005c/poll
-
-    #compass lsm303dlhc
-    chown system system /sys/bus/i2c/devices/5-001e/lsm303cmp/enable
-    chown system system /sys/bus/i2c/devices/5-001e/lsm303cmp/poll
-    chown system system /sys/bus/i2c/devices/5-001e/enable
-    chown system system /sys/bus/i2c/devices/5-001e/poll
-
-    #als/ps apds990x
-    chown system system /dev/apds990x_lsensor
-    chown system system /dev/apds990x_psensor
-    chown system system /sys/bus/i2c/devices/5-0039/prox0_raw
-    chown system system /sys/bus/i2c/devices/5-0039/prox0_thresh_above_value
-
-    chown system system /sys/bus/i2c/devices/5-0039/apds990x_als/enable
-    chown system system /sys/bus/i2c/devices/5-0039/apds990x_als/poll
-    chown system system /sys/bus/i2c/devices/5-0039/apds990x_ps/enable
-    chown system system /sys/bus/i2c/devices/5-0039/apds990x_ps/poll
-    chown system system /sys/bus/i2c/devices/5-0039/apds990x_ps/rawdata
-    chown system system /sys/bus/i2c/devices/5-0039/apds990x_ps/thresh
-
-    chown system system /dev/sep_sec_driver
-    chmod 0660 /dev/sep_sec_driver
-
-    #Gyroscope l3g4200d
-    chown system system /sys/bus/i2c/devices/5-0068/poll
-    chown system system /sys/bus/i2c/devices/5-0068/enable
-    chown system system /sys/bus/i2c/devices/5-006a/poll
-    chown system system /sys/bus/i2c/devices/5-006a/enable
-
-    # SEP (Chaabi)
-    copy /system/etc/security/sep_policy.conf /sys/fs/sepfs/load
-    chown system system /dev/dx_sep_q0
-    chmod 0666 /dev/dx_sep_q0
-    chown system system /dev/dx_sep_q1
-    chmod 0666 /dev/dx_sep_q1
+    # Asus PS/ALS sensor drivers
+    chown system system /dev/psensor
+    chown system system /dev/lsensor
+    chown system system /sys/devices/virtual/sensors/psensor/switch
+    chown system system /sys/devices/virtual/sensors/lsensor/switch
 
     chown system system /dev/sep_sec_driver
     chmod 0666 /dev/sep_sec_driver
 
-
-# Permissions for monzax
-    chown system system /dev/monzax
-    chmod 0660 /dev/monzax
-
-# Permissions for LED
-    chown system system /sys/class/leds/intel_keypad_led/brightness
-
-#For Quick Charge control
-#    chown system system /proc/smb1357_qc_disable
-
-# Permissions for BCU sysfs interface and make generic path to access by apps
-#    chown system system /sys/devices/platform/bcove_bcu/camflash_ctrl
-#    symlink /sys/devices/platform/bcove_bcu /dev/bcu
     restorecon /config
     restorecon_recursive /factory
     restorecon_recursive /config
     restorecon_recursive /logs
 
-# Permissions for BCU Driver
-    chown system system /sys/devices/platform/msic_ocd/msic_current/batt_level
 # For audio headset ringtone volume index when ringer mode is vibrate
     setprop ro.audio.vibra.ring.vol.idx 5
-
-# Permissions for Touch Palm node
-    chown system system /proc/asus_touch_palm_status
-
-# Permissions for Touch Proximity node
-    chown system system /proc/asus_touch_proximity_status
-
 
 # Permissions for Touch dclick Mode
     chown system radio /sys/bus/i2c/devices/i2c-0/0-0038/dclick_mode
     chmod 0664 /sys/bus/i2c/devices/i2c-0/0-0038/dclick_mode
-# Permissions for Touch Gesture Mode
-    chown system system /sys/bus/i2c/devices/i2c-0/0-0020/input/input1/glove_mode
-
-# Permissions for Sdcard Power Node
-	chown system system /proc/asus_sd_power
-
-
-service sl_si_service /system/bin/sl_si_service d=1
-    user system
-    group system
-    socket silentlake stream 666 system system
-    disabled
-    oneshot
-
-#service fg_conf /system/bin/fg_conf -w
-#    group system
-#    oneshot
-#    disabled
-
-#+++++++++++++++++++++lynn 2014/10/27 FAC++++++++++++++++++++++
-# import ASUS factory tools script
-# note:Shipping IMG no this service,because no "AsusFactory" floder where asusft.sh exist.
-service asusft /system/bin/sh /system/etc/asus/asusft.sh
-    class eng
-    oneshot
-    on property:ro.secure=0
-    class_start eng
-#---------------------lynn 2014/10/27 FAC----------------------
-
-#+++++++++++++++++++++ward_du  2014/11/07 For BT,Wifi MAC and ISN,SSN ++++++++++++++++++++++
-service customize /system/bin/customize_service
-	class core
-	user root
-	oneshot
-#---------------------ward_du 2014/11/07 FAC----------------------
-
-# Root command service
-service app_runcmd /system/bin/app_runcmd.sh
-     disabled
-     oneshot
-
-service wifitest_runcmd /system/bin/wifitest_runcmd.sh
-     disabled
-     oneshot
-
-#on property:init.svc.pvrsrvctl=stopped
-#    # GPU freq
-#    chown system system /sys/class/devfreq/dfrgx/max_freq
-#    chmod 0660 /sys/class/devfreq/dfrgx/max_freq
-#    chown system system /sys/class/devfreq/dfrgx/min_freq
-#    chmod 0660 /sys/class/devfreq/dfrgx/min_freq
-
-on property:service.mmgr.smp=1
-   write /proc/irq/36/smp_affinity f
-
-on property:service.mmgr.smp=0
-    write /proc/irq/36/smp_affinity 1
 
 service audioserver /system/bin/audioserver
     class main
@@ -326,54 +177,17 @@ service drm /system/bin/drmserver
     group drm system inet drmrpc readproc sdcard_r
     writepid /dev/cpuset/foreground/tasks
 
-service sensorhubd /system/bin/sensorhubd
-    class main
-    user system
-    group system
-    socket sensorhubd stream 660 system system
-
 on charger
-    start upi_ug31xx
     mount ext4 /dev/block/by-name/system /system ro noatime barrier=1,data=ordered
     mount ext4 /dev/block/by-name/logs /logs nosuid nodev barrier=1,data=ordered
-
+    start upi_ug31xx
     start watchdogd
-
-    # Invoke fuel gauging helper binary to restore config data
-    #symlink /dev/max170xx /dev/fg
-    #chmod 0775 /dev/fg
-    #wait /system/bin/fg_conf
-    #start fg_conf
 
 service upi_ug31xx /system/bin/upi_ug31xx
     class core
     user system
     group system
 #    seclabel u:r:asus_config:s0
-
-#Turn on VPROG2 Power rail to avoid power leakage in Sensor
-
-#    chmod 0664 /sys/bus/pci/devices/0000:00:16.1/control
-#    write /sys/bus/pci/devices/0000:00:16.1/control "0 1 0"
-
-on property:persist.asus.instant_camera=1
-    write sys/devices/platform/gpio-keys/enabled_wakeup 115
-    write sys/devices/platform/gpio-keys/enabled_wakeup 114
-
-on property:persist.asus.instant_camera=0
-    write sys/devices/platform/gpio-keys/disabled_wakeup 115
-    write sys/devices/platform/gpio-keys/disabled_wakeup 114
-
-# Add for USB ethernet dongle
-service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL -f/system/etc/dhcpcd/dhcpcd.conf
-    class main
-    disabled
-    oneshot
-
-service iprenew_eth0 /system/bin/dhcpcd -n
-    class main
-    disabled
-    oneshot
 
 service keystore /system/bin/keystore /data/misc/keystore
     class main

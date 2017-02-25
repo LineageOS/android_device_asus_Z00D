@@ -25,20 +25,13 @@ on init
     symlink /sdcard /storage/sdcard0
 
 on boot
-#    chown system system /dev/pvr_sync
-#    chmod 666 /dev/pvr_sync
-
-#   chown system system /dev/dri/card0
-#   chmod 0666 /dev/dri/card0
-#   symlink /dev/dri/card0 /dev/card0
 
     # IMG Graphics specific setup. See also "service pvrsrvctl"
     # The permissions below should be tighter.
-#    chown system system /dev/card0
     chown system system /sys/class/backlight/psb-bl/brightness
     chown system system /sys/class/backlight/psb-bl/max_brightness
     chown system system /sys/class/backlight/psb-bl/actual_brightness
- #   chmod 0666 /dev/card0
+
     chmod 0664 /sys/class/backlight/psb-bl/brightness
     chmod 0664 /sys/class/backlight/psb-bl/max_brightness
     chmod 0664 /sys/class/backlight/psb-bl/actual_brightness
@@ -77,22 +70,6 @@ on fs
     restorecon_recursive /factory
     restorecon_recursive /logs
 
-on post-fs
-# create virtual SD card at /mnt/sdcard, based on the /data/media directory
-# daemon will drop to user/group system/media_rw after initializing
-# underlying files in /data/media will be created with user and group media_rw (1023)
-
-# Performance tweaks for interactive governor
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/touchboostpulse
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/touchboostpulse_duration
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/touchboost_freq
-    chmod 0220 /sys/devices/system/cpu/cpufreq/interactive/touchboostpulse
-    chmod 0220 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-
 on post-fs-data
     mkdir /data/system/ 0770 system system
     write /proc/sys/kernel/ctrl-alt-del 0
@@ -104,10 +81,6 @@ on post-fs-data
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
-
-    # Set this property to force the camera shutter sound to play on speaker
-    # We implement this property in buildinfo.sh. So comment this.
-    # setprop ro.camera.sound.forced 1
 
     # Set this property to avoid fm rx to be muted
     setprop ro.fmrx.sound.forced 1
@@ -177,15 +150,6 @@ service charger_app /charger
     class charger
     user root
     seclabel u:r:healthd:s0
-
-# For log uploader by qinghua_liu@asus.com
-service logbackup /system/bin/sh /system/etc/packlogs.sh
-    class late_start
-    user root
-    group sdcard_rw
-    oneshot
-    disabled
-    seclabel u:r:logtoold:s0
 
 # Enable native bridge for target executables
 on property:ro.enable.native.bridge.exec=1
