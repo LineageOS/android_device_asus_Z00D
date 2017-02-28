@@ -161,11 +161,27 @@ BOARD_FLASH_BLOCK_SIZE := 2048
 TARGET_POWERHAL_VARIANT := redhookbay
 
 # Recovery
+RECOVERY_VARIANT := twrp
 TARGET_NO_TWO_STEP_RECOVERY := true
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 BOARD_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 TARGET_RECOVERY_FSTAB := device/asus/Z00D/rootdir/etc/fstab.redhookbay
 TARGET_RECOVERY_DEVICE_MODULES := libinit_ctp librecovery_updater_ctp thermald upi_ug31xx
+
+ifeq ($(RECOVERY_VARIANT),twrp)
+TARGET_RECOVERY_FSTAB := device/asus/Z00D/recovery/twrp.fstab
+BOARD_HAS_NO_REAL_SDCARD := true
+TW_THEME := portrait_hdpi
+RECOVERY_SDCARD_ON_DATA := true
+TW_DEFAULT_BRIGHTNESS := "160"
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_NTFS_3G := true
+TW_EXCLUDE_SUPERSU := true
+TW_NO_USB_STORAGE := true
+else
+TARGET_RECOVERY_FSTAB := device/asus/Z00D/rootdir/etc/fstab.redhookbay
+TARGET_RECOVERY_DENSITY := hdpi
+endif
 
 # Security
 BUILD_WITH_SECURITY_FRAMEWORK := chaabi_token
