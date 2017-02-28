@@ -1,0 +1,10 @@
+/system 	 ext4    /dev/block/by-name/system
+/cache  	 ext4    /dev/block/by-name/cache
+/config 	 ext4    /dev/block/by-name/config            flags=backup=1;mounttodecrypt
+/data   	 ext4    /dev/block/by-name/data   	      flags=encryptable=/config/userdata_footer
+/factory	 ext4    /dev/block/by-name/factory           flags=display="Factory";
+/misc        emmc    /dev/block/by-name/misc
+
+/external_sd vfat    /dev/block/mmcblk1p1 /dev/block/mmcblk1  flags=display="Micro SDcard";storage;wipeingui;removable
+/usb-otg     vfat    /dev/block/sda1      /dev/block/sda      flags=removable;storage;display=USB-OTG
+
