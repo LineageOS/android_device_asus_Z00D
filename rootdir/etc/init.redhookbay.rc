@@ -171,6 +171,12 @@ service audioserver /system/bin/audioserver
     ioprio rt 4
     writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks
 
+service mdservice /system/bin/mdservice
+    class core
+    user system
+    group graphics
+    writepid /dev/cpuset/foreground/tasks
+
 service drm /system/bin/drmserver
     class main
     user drm
