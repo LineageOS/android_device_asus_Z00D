@@ -1,0 +1,16 @@
+# multidisplay service
+type mdservice, domain;
+type mdservice_exec, exec_type, file_type;
+
+init_daemon_domain(mdservice)
+
+# Binder IPC
+binder_use(mdservice)
+binder_call(mdservice, binderservicedomain)
+binder_service(mdservice)
+r_dir_file(mdservice, binderservicedomain)
+
+# GPU access
+allow mdservice gpu_device:chr_file rw_file_perms;
+
+allow mdservice display_service:service_manager add;
