@@ -48,13 +48,6 @@ on init
     mkdir /factory
     mkdir /config
 
-    # Configure the proper cpusets
-    write /dev/cpuset/system-background/cpus 0-3
-    write /dev/cpuset/background/cpus 0-3
-    write /dev/cpuset/foreground/boost/cpus 0-3
-    write /dev/cpuset/foreground/cpus 0-3
-    write /dev/cpuset/cpus 0-3
-
 on boot
 
 #  Permissions for Thermal Management
@@ -187,7 +180,7 @@ service upi_ug31xx /system/bin/upi_ug31xx
     class core
     user system
     group system
-#    seclabel u:r:asus_config:s0
+    writepid /dev/cpuset/system-background/tasks
 
 service keystore /system/bin/keystore /data/misc/keystore
     class main

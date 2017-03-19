@@ -33,6 +33,7 @@ TARGET_BOARD_KERNEL_HEADERS := device/asus/Z00D/kernel-headers
 TARGET_SPECIFIC_HEADER_PATH := device/asus/Z00D/include
 
 TARGET_DROIDBOOT_LIBS := libintel_droidboot
+ENABLE_CPUSETS := true
 
 # OTA Packaging / Bootimg creation
 BOARD_USES_FULL_RECOVERY_IMAGE := true
