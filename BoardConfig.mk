@@ -136,6 +136,9 @@ TARGET_INIT_UMOUNT_AND_FSCK_IS_UNSAFE := true
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
+# Linker
+LINKER_FORCED_SHIM_LIBS := /system/lib/hw/hwcomposer.redhookbay.so|libshim_hwc.so
+
 # Media
 TARGET_NUPLAYER_CANNOT_SET_SURFACE_WITHOUT_A_FLUSH := true
 BOARD_USES_WRS_OMXIL_CORE := true
