@@ -37,7 +37,6 @@ TARGET_DROIDBOOT_LIBS := libintel_droidboot
 TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/Z00D/make_recovery_patch
 
 # OTA Packaging / Bootimg creation
-BOARD_USES_FULL_RECOVERY_IMAGE := true
 BOARD_CUSTOM_MKBOOTIMG := pack_intel
 BOARD_CUSTOM_BOOTIMG_MK := device/asus/Z00D/mkbootimg.mk
 DEVICE_BASE_BOOT_IMAGE := device/asus/Z00D/base_images/boot.img
