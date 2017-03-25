@@ -45,8 +45,9 @@ public class TouchscreenGestures {
         new TouchscreenGesture(0, "Letter C", 249),
         new TouchscreenGesture(1, "Letter e", 250),
         new TouchscreenGesture(2, "Letter S", 251),
-        new TouchscreenGesture(3, "Letter W", 253),
-        new TouchscreenGesture(4, "Letter Z", 254),
+        new TouchscreenGesture(3, "Letter V", 252),
+        new TouchscreenGesture(4, "Letter W", 253),
+        new TouchscreenGesture(5, "Letter Z", 254),
     };
 
     private static final int KEY_MASK_GESTURE_CONTROL = 0x40;
@@ -54,6 +55,7 @@ public class TouchscreenGestures {
         0x04, // c gesture mask
         0x08, // e gesture mask
         0x10, // s gesture mask
+        0x01, // v gesture mask
         0x20, // w gesture mask
         0x02, // z gesture mask
     };
