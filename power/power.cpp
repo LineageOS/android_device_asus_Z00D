@@ -34,6 +34,8 @@
 #define NORMAL_MAX_FREQ 1600000
 
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+static int boostpulse_fd = -1;
+static int boostpulse_warned;
 
 enum {
     PROFILE_POWER_SAVE = 0,
@@ -114,6 +116,26 @@ static void sysfs_write(const char *path, const char *const s) {
 static void power_set_interactive(struct power_module *, int on __unused) {
 }
 
+static int boostpulse_open()
+{
+    char buf[80];
+    int len;
+
+    pthread_mutex_lock(&lock);
+    if (boostpulse_fd < 0) {
+        boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
+        if (boostpulse_fd < 0) {
+            if (!boostpulse_warned) {
+                strerror_r(errno, buf, sizeof(buf));
+                ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, buf);
+                boostpulse_warned = 1;
+            }
+        }
+    }
+    pthread_mutex_unlock(&lock);
+    return boostpulse_fd;
+}
+
 static void sysfs_write_int(char *path, int value)
 {
     char buf[80];
@@ -183,6 +205,9 @@ static void set_power_profile(int profile) {
 static void power_hint( __attribute__((unused)) struct power_module *module,
                       power_hint_t hint, void *data)
 {
+    char buf[80];
+    int len;
+
     if (hint == POWER_HINT_SET_PROFILE) {
         pthread_mutex_lock(&lock);
         set_power_profile(*(int32_t *)data);
@@ -197,9 +222,13 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
     switch (hint) {
     case POWER_HINT_INTERACTION:
     case POWER_HINT_LAUNCH:
-	pthread_mutex_lock(&lock);
-	sysfs_write(BOOSTPULSE_PATH, "1");
-	pthread_mutex_unlock(&lock);
+        if (boostpulse_open() >= 0) {
+            len = write(boostpulse_fd, "1", 1);
+            if (len < 0) {
+                strerror_r(errno, buf, sizeof(buf));
+                ALOGE("Error writing to %s: %s\n", BOOSTPULSE_PATH, buf);
+            }
+        }
 	break;
 
     case POWER_HINT_CPU_BOOST:
