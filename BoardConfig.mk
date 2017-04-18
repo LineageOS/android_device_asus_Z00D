@@ -150,6 +150,6 @@ WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_AP      := "/asusfw/wifi/fw_bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA     := "/asusfw/wifi/fw_bcmdhd.bin"
 
-# Use the non-open-source parts, if they're present
--include vendor/asus/Z00D/BoardConfigVendor.mk
+# Use the non-open-source parts
+include vendor/asus/Z00D/BoardConfigVendor.mk
 
