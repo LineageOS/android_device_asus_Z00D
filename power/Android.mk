@@ -20,10 +20,9 @@ LOCAL_PATH := $(call my-dir)
 # hw/<POWERS_HARDWARE_MODULE_ID>.<ro.hardware>.so
 include $(CLEAR_VARS)
 
-LOCAL_CFLAGS += -Werror -Wno-sizeof-array-argument
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils libutils
-LOCAL_SRC_FILES := power.cpp
+LOCAL_SRC_FILES := power.c
 LOCAL_MODULE := power.redhookbay
 
 ifneq ($(TARGET_TAP_TO_WAKE_NODE),)
@@ -33,4 +32,4 @@ endif
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
 
-endif # TARGET_POWERHAL_VARIANT == mofd_v1
+endif # TARGET_POWERHAL_VARIANT == redhookbay
