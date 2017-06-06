@@ -32,6 +32,7 @@
 #define NORMAL_MAX_FREQ 1600000
 
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+static int boostpulse_fd = -1;
 
 enum {
     PROFILE_POWER_SAVE = 0,
@@ -45,6 +46,9 @@ enum {
 static int current_power_profile = PROFILE_BALANCED;
 
 #define BUF_SIZE 80
+
+#define TOUCHBOOSTPULSE_PATH "/sys/devices/system/cpu/cpufreq/interactive/touchboostpulse"
+#define BOOST_PATH "/sys/devices/system/cpu/cpufreq/interactive/boost"
 
 #define CPU0_PATH "/sys/devices/system/cpu/cpu0"
 #define CPU2_PATH "/sys/devices/system/cpu/cpu2"
@@ -94,6 +98,20 @@ static void sysfs_write(const char *path, const char *const s) {
 static void power_set_interactive(__attribute__((unused)) struct power_module *module, int on) {
 }
 
+static int boostpulse_open()
+{
+    char buf[80];
+    int len;
+
+    pthread_mutex_lock(&lock);
+    if (boostpulse_fd < 0) {
+        boostpulse_fd = open(TOUCHBOOSTPULSE_PATH, O_WRONLY);
+    }
+    pthread_mutex_unlock(&lock);
+
+    return boostpulse_fd;
+}
+
 static void sysfs_write_int(char *path, int value)
 {
     char buf[80];
@@ -103,6 +121,16 @@ static void sysfs_write_int(char *path, int value)
 
 static void power_init(__attribute__((unused)) struct power_module *module) {
 }
+
+static void boost(int32_t duration) {
+    if (duration < 1)
+	return;
+
+    sysfs_write(BOOST_PATH, "1");
+    usleep(duration);
+    sysfs_write(BOOST_PATH, "0");
+}
+
 
 static void set_power_profile(int profile) {
     int min_freq = POWERSAVE_MIN_FREQ;
@@ -160,9 +188,20 @@ static void power_hint( __attribute__((unused)) struct power_module *module,
 
     switch (hint) {
     case POWER_HINT_INTERACTION:
+    case POWER_HINT_LAUNCH:
+        if (boostpulse_open() >= 0) {
+            len = write(boostpulse_fd, "1", 1);
+            if (len < 0) {
+                strerror_r(errno, buf, sizeof(buf));
+                ALOGE("Error writing to %s: %s\n", TOUCHBOOSTPULSE_PATH, buf);
+            }
+        }
 	break;
 
     case POWER_HINT_CPU_BOOST:
+	pthread_mutex_lock(&lock);
+	boost(*(int32_t *)data);
+	pthread_mutex_unlock(&lock);
 	break;
 
     case POWER_HINT_VSYNC:
