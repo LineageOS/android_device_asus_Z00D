@@ -1,50 +1,29 @@
 #
-# USB configuration common for all merr android devices
+# USB configuration common for all clv android devices
 #
 on init
     mkdir /dev/bus
     mkdir /dev/bus/usb
     mkdir /dev/bus/usb/001
 
-on boot
-    write /sys/class/android_usb/android0/iSerial ${ro.serialno}
-    write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
-    write /sys/class/android_usb/android0/iProduct ${ro.product.model}
-    write /sys/class/android_usb/android0/f_rndis/manufacturer ${ro.product.manufacturer}
-    write /sys/class/android_usb/android0/f_rndis/vendorID ${ro.usb.vid}
-    setprop persist.sys.usb.config.extra none
+    chmod 0660 /sys/class/android_usb/android0/f_rndis/ethaddr
+    # ASUS_BSP+++ BennyCheng "support auto driver installation for Windows rndis"
+    write /sys/class/android_usb/android0/f_rndis/wceis 1
+    # ASUS_BSP--- BennyCheng "support auto driver installation for Windows rndis"
 
 on fs
-    write /sys/class/android_usb/android0/iSerial ${ro.serialno}
-    write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
-    write /sys/class/android_usb/android0/iProduct ${ro.product.model}
-    write /sys/class/android_usb/android0/f_rndis/manufacturer ${ro.product.manufacturer}
     mkdir /dev/usb-ffs 0770 shell shell
     mkdir /dev/usb-ffs/adb 0770 shell shell
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
 
-on post-fs-data
-    chown system system /sys/class/android_usb/android0/f_mass_storage/lun/file
-    chmod 0660 /sys/class/android_usb/android0/f_mass_storage/lun/file
-    chown system system /sys/class/android_usb/android0/f_rndis/ethaddr
-    chmod 0660 /sys/class/android_usb/android0/f_rndis/ethaddr
-
-# Used to disable USB when switching states
-on property:sys.usb.config=none
-    stop adbd
-    stop pclinkd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    setprop sys.usb.state ${sys.usb.config}
-
-# mass_storage only USB configuration
-on property:sys.usb.config=mass_storage
-    stop adbd
-    stop pclinkd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    setprop sys.usb.state ${sys.usb.config}
+# ASUS_BSP+++ BennyCheng "set SSN as usb serial number"
+service asus-usb-sh /system/etc/init.asus.usb.sh
+    class core
+    user root
+    group root
+    oneshot
+# ASUS_BSP--- BennyCheng "set SSN as usb serial number"
 
 # adb only USB configuration
 # This should only be used for debugging
@@ -54,23 +33,24 @@ on property:sys.usb.config=iadb
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 8087
-    write /sys/class/android_usb/android0/idProduct 0a21
-    write /sys/class/android_usb/android0/functions mtp,adb
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7770
+    write /sys/class/android_usb/android0/functions adb
+    write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/android0/enable 1
     start adbd
     setprop sys.usb.state ${sys.usb.config}
 
-# adb + mass_storage USB configuration
-on property:sys.usb.config=adb,mass_storage
+# ASUS_BSP+++ BennyCheng "use asus vid & pid for adb only function"
+on property:sys.usb.config=adb
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 4EE7
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7770
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     start adbd
     setprop sys.usb.state ${sys.usb.config}
+# ASUS_BSP--- BennyCheng "use asus vid & pid for adb only function"
 
 # pclink only USB configuration
 on property:sys.usb.config=pclink
@@ -83,7 +63,6 @@ on property:sys.usb.config=pclink
     start pclinkd
     setprop sys.usb.state ${sys.usb.config}
 
-# pclink + mass_storage USB configuration
 on property:sys.usb.config=pclink,mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
@@ -99,90 +78,27 @@ on property:sys.usb.config=charging
     stop adbd
     stop pclinkd
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 8087
-    write /sys/class/android_usb/android0/idProduct 0a21
-    write /sys/class/android_usb/android0/functions mtp,adb
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB accessory configuration
-on property:sys.usb.config=accessory
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d00
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7770
+    write /sys/class/android_usb/android0/functions adb
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB accessory configuration, with adb
-on property:sys.usb.config=accessory,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d01
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# audio accessory configuration
-on property:sys.usb.config=audio_source
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d02
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 0
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# audio accessory configuration, with adb
-on property:sys.usb.config=audio_source,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d03
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 0
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB and audio accessory configuration
-on property:sys.usb.config=accessory,audio_source
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d04
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 0
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB and audio accessory configuration, with adb
-on property:sys.usb.config=accessory,audio_source,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d05
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 0
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
     setprop sys.usb.state ${sys.usb.config}
 
 # USB MTP configuration
 on property:sys.usb.config=mtp
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5600
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7772
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
 
-# USB MTP + mass_storage configuration
 on property:sys.usb.config=mtp,mass_storage
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5600
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7772
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/android0/enable 1
@@ -191,19 +107,8 @@ on property:sys.usb.config=mtp,mass_storage
 # USB MTP configuration, with adb
 on property:sys.usb.config=mtp,adb
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5601
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB MTP + mass_storage configuration, with adb
-on property:sys.usb.config=mtp,adb,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5601
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7773
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 1
     write /sys/class/android_usb/android0/enable 1
@@ -221,7 +126,6 @@ on property:sys.usb.config=mtp,pclink
     start pclinkd
     setprop sys.usb.state ${sys.usb.config}
 
-# USB MTP + pclink + mass_storage
 on property:sys.usb.config=mtp,pclink,mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
@@ -244,7 +148,6 @@ on property:sys.usb.config=mtp,adb,pclink
     start pclinkd
     setprop sys.usb.state ${sys.usb.config}
 
-# USB MTP + adb + pclink + mass_storage
 on property:sys.usb.config=mtp,adb,pclink,mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
@@ -256,50 +159,27 @@ on property:sys.usb.config=mtp,adb,pclink,mass_storage
     start pclinkd
     setprop sys.usb.state ${sys.usb.config}
 
+on property:sys.usb.config=mtp,adb,mass_storage
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7773
+    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
+    write /sys/class/android_usb/android0/enable 1
+    start adbd
+    setprop sys.usb.state ${sys.usb.config}
+
 # USB PTP configuration
 on property:sys.usb.config=ptp
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5604
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7776
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
 
-# USB PTP + mass_storage configuration
-on property:sys.usb.config=ptp,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5604
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 0
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB PTP configuration, with adb
-on property:sys.usb.config=ptp,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5605
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB PTP + mass_storage configuration, with adb
-on property:sys.usb.config=ptp,adb,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5605
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-
-# USB PTP + pclink
-on property:sys.usb.config=ptp,pclink
+on property:sys.usb.config=ptp,pclink,mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
     write /sys/class/android_usb/android0/idProduct 5F06
@@ -309,8 +189,28 @@ on property:sys.usb.config=ptp,pclink
     start pclinkd
     setprop sys.usb.state ${sys.usb.config}
 
-# USB PTP + pclink + mass_storage
-on property:sys.usb.config=ptp,pclink,mass_storage
+on property:sys.usb.config=ptp,mass_storage
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7776
+    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/bus/pci/devices/0000:00:02.3/sdis 0
+    write /sys/class/android_usb/android0/enable 1
+    setprop sys.usb.state ${sys.usb.config}
+
+# USB PTP configuration, with adb
+on property:sys.usb.config=ptp,adb
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7777
+    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
+    write /sys/class/android_usb/android0/enable 1
+    start adbd
+    setprop sys.usb.state ${sys.usb.config}
+
+# USB PTP + pclink
+on property:sys.usb.config=ptp,pclink
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
     write /sys/class/android_usb/android0/idProduct 5F06
@@ -332,7 +232,6 @@ on property:sys.usb.config=ptp,adb,pclink
     start pclinkd
     setprop sys.usb.state ${sys.usb.config}
 
-# USB PTP + adb + pclink + mass_storage
 on property:sys.usb.config=ptp,adb,pclink,mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
@@ -344,27 +243,34 @@ on property:sys.usb.config=ptp,adb,pclink,mass_storage
     start pclinkd
     setprop sys.usb.state ${sys.usb.config}
 
+on property:sys.usb.config=ptp,adb,mass_storage
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7777
+    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
+    write /sys/class/android_usb/android0/enable 1
+    start adbd
+    setprop sys.usb.state ${sys.usb.config}
+
 # USB RNDIS configuration
 on property:sys.usb.config=rndis
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5602
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7774
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
-    write /sys/class/android_usb/f_rndis/wceis 1
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
     wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
     write /sys/class/net/rndis0/queues/rx-0/rps_cpus F
 
-# USB RNDIS + mass_storage configuration
 on property:sys.usb.config=rndis,mass_storage
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5602
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7774
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
-    write /sys/class/android_usb/f_rndis/wceis 1
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
     wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
@@ -373,25 +279,10 @@ on property:sys.usb.config=rndis,mass_storage
 # USB RNDIS configuration, with adb
 on property:sys.usb.config=rndis,adb
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5603
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7775
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 1
-    write /sys/class/android_usb/f_rndis/wceis 1
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state ${sys.usb.config}
-    wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
-    write /sys/class/net/rndis0/queues/rx-0/rps_cpus F
-
-# USB RNDIS + mass_storage configuration, with adb
-on property:sys.usb.config=rndis,adb,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5603
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
-    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
-    write /sys/class/android_usb/f_rndis/wceis 1
     write /sys/class/android_usb/android0/enable 1
     start adbd
     setprop sys.usb.state ${sys.usb.config}
@@ -412,7 +303,6 @@ on property:sys.usb.config=rndis,pclink
     wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
     write /sys/class/net/rndis0/queues/rx-0/rps_cpus F
 
-# USB RNDIS + pclink + mass_storage
 on property:sys.usb.config=rndis,pclink,mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
@@ -441,7 +331,6 @@ on property:sys.usb.config=rndis,adb,pclink
     wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
     write /sys/class/net/rndis0/queues/rx-0/rps_cpus F
 
-# USB RNDIS + adb + pclink + mass_storage
 on property:sys.usb.config=rndis,adb,pclink,mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0B05
@@ -456,11 +345,23 @@ on property:sys.usb.config=rndis,adb,pclink,mass_storage
     wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
     write /sys/class/net/rndis0/queues/rx-0/rps_cpus F
 
+on property:sys.usb.config=rndis,adb,mass_storage
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 0B05
+    write /sys/class/android_usb/android0/idProduct 7775
+    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
+    write /sys/class/android_usb/android0/enable 1
+    start adbd
+    setprop sys.usb.state ${sys.usb.config}
+    wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
+    write /sys/class/net/rndis0/queues/rx-0/rps_cpus F
+
 # USB ACM configuration, with rndis and adb
 on property:sys.usb.config=rndis,acm,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 8087
-    write /sys/class/android_usb/android0/idProduct 0a26
+    write /sys/class/android_usb/android0/idProduct 0a1b
     write /sys/class/android_usb/android0/f_acm/instances 1
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 1
@@ -470,20 +371,79 @@ on property:sys.usb.config=rndis,acm,adb
     wait /sys/class/net/rndis0/queues/rx-0/rps_cpus 1
     write /sys/class/net/rndis0/queues/rx-0/rps_cpus F
 
-# Used to set USB configuration at boot and to switch the configuration
-# when changing the default configuration
-on property:persist.sys.usb.config=*
-    setprop sys.usb.config ${persist.sys.usb.config}
+# USB 2ACM configuration, with rndis and adb
+on property:sys.usb.config=rndis,2acm,adb
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 8087
+    write /sys/class/android_usb/android0/idProduct 0a31
+    write /sys/class/android_usb/android0/f_acm/instances 2
+    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/bus/pci/devices/0000:00:02.3/sdis 1
+    write /sys/class/android_usb/android0/enable 1
+    start adbd
+    setprop sys.usb.state ${sys.usb.config}
 
-# USB vBus status changed to normal
-on property:sys.usb.vbus=normal
-   write /sys/class/usb_otg/otg0/a_bus_drop 0
+# ASUS_BSP+++ BennyCheng "add properties to support the asus debug tool"
+on property:persist.sys.usb.otg.mode=host
+    setprop sys.usb.otg.mode host
 
-# USB vBus status changed to warning
-on property:sys.usb.vbus=warning
-   write /sys/class/usb_otg/otg0/a_bus_drop 0
+on property:persist.sys.usb.otg.mode=peripheral
+    setprop sys.usb.otg.mode peripheral
 
-# USB vBus status changed to critical
-on property:sys.usb.vbus=critical
-   write /sys/class/usb_otg/otg0/a_bus_drop 1
+on property:persist.sys.usb.otg.mode=auto
+    setprop sys.usb.otg.mode auto
 
+on property:sys.usb.otg.mode=host
+    write /proc/asus_otg/mode host
+
+on property:sys.usb.otg.mode=peripheral
+    write /proc/asus_otg/mode peripheral
+
+on property:sys.usb.otg.mode=auto
+    write /proc/asus_otg/mode auto
+# ASUS_BSP--- BennyCheng "add properties to support the asus debug tool"
+
+# ASUS_BSP+++ BennyCheng "enable acm by engineer mode for AT&T requirement"
+service asus-usb-acm  /system/etc/init.asus.usb.acm.sh
+    class core
+    user root
+    disabled
+    oneshot
+
+on property:sys.usb.config.boot=QCOM
+    setprop persist.usb.diag 1
+
+on property:sys.usb.config.boot=ASUS
+    setprop persist.usb.diag 0
+
+on property:persist.usb.diag=1
+    start adbd
+    start asus-usb-acm
+
+on property:persist.usb.diag=0
+    start asus-usb-acm
+
+on property:sys.atcmd.ready=1
+    start asus-usb-acm
+# ASUS_BSP--- BennyCheng "enable acm by engineer mode for AT&T requirement"
+
+# ASUS_BSP+++ BennyCheng "add apq mdm usb switch support"
+on property:sys.usb.otg.mdm.sw=apq
+    write /proc/asus_otg/apq_mdm_sw apq
+
+on property:sys.usb.otg.mdm.sw=mdm
+    write /proc/asus_otg/apq_mdm_sw mdm
+# ASUS_BSP--- BennyCheng "add apq mdm usb switch support"
+
+# ASUS_BSP+++ BennyCheng "add otg check at boot"
+on property:sys.boot_completed=1
+    write /proc/asus_otg/otg_boot_check 1
+# ASUS_BSP--- BennyCheng "add otg check at boot"
+
+# ASUS_BSP+++ Landice "[ZE500CL][USBH][NA][fix] Support host charging for stress test"
+on property:persist.sys.usb.otg.allow_chg=1
+    write /proc/asus_otg/allow_host_ext_power enable
+
+on property:persist.sys.usb.otg.allow_chg=0
+    write /proc/asus_otg/allow_host_ext_power disable
+# ASUS_BSP--- Landice "[ZE500CL][USBH][NA][fix] Support host charging for stress test"

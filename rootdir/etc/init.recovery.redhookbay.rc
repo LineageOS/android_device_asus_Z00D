@@ -1,4 +1,4 @@
-# MOFD_V0 specific rules for recovery OS
+# REDHOOKBAY specific rules for recovery os
 on early-init
     chmod 0600 /dev/dri/controlD64
     start thermald
@@ -15,18 +15,29 @@ on init
     mkdir /factory 0775 system system
     mount ext4 /dev/block/by-name/factory /factory nosuid nodev noatime barrier=1,data=ordered
 
+    mkdir /asdf 0771 system system
+    wait /dev/block/by-name/asdf
+    mount ext4 /dev/block/by-name/asdf /asdf nosuid nodev barrier=1
+
+    # pstore/ramoops previous console log
+    mount pstore pstore /sys/fs/pstore
+    chown system log /sys/fs/pstore/console-ramoops
+    chmod 0440 /sys/fs/pstore/console-ramoops
+
 on boot
     setprop sys.usb.config adb
     trigger firmware_mounts_complete
+
+on fs
+    copy /sys/fs/pstore/console-ramoops /asdf/lastkmsg_BeforeRecovery
 
 on firmware_mounts_complete
     rm /dev/.booting
 
 on property:sys.usb.config=adb
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 8087
-    write /sys/class/android_usb/android0/idProduct 0a5d
-    write /sys/class/android_usb/android0/iSerial ${ro.serialno}
+    write /sys/class/android_usb/android0/idVendor 0b05
+    write /sys/class/android_usb/android0/idProduct 7770
     write /sys/class/android_usb/android0/iProduct "Android-Phone"
     write /sys/class/android_usb/android0/functions $sys.usb.config
     write /sys/class/android_usb/android0/enable 1
@@ -34,18 +45,14 @@ on property:sys.usb.config=adb
 # copied from common/init.watchdogd.rc
 service watchdogd /sbin/watchdogd 60 20
     oneshot
-    seclabel u:r:watchdogd:s0
 
 service thermald /sbin/thermald ROS
     class core
     user root
-    seclabel u:r:healthd:s0
-
-service upi_ug31xx /sbin/upi_ug31xx
-    class core
-    user root
-    seclabel u:r:asus_config:s0
 
 # Reset the watchdog counter once boot is completed
 on property:init.svc.recovery=running
     write /sys/devices/virtual/misc/watchdog/counter "0"
+
+service upi_ug31xx /upi_ug31xx
+    class core

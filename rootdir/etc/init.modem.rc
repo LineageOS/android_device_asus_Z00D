@@ -1,4 +1,3 @@
-# init.modem.rc for telephony services
 on init
     chown root radio /dev/ttyGTM*
     chmod 0660 /dev/ttyGTM*
@@ -16,22 +15,24 @@ on init
 
 on boot
 #  Permissions for modem_nvram files used for pin caching
-    chmod 0770 /sys/kernel/modem_nvram
-    chown system radio /sys/kernel/modem_nvram
+    chmod 0775 /sys/kernel/modem_nvram
+    chown root root /sys/kernel/modem_nvram
     chown system radio /sys/kernel/modem_nvram/dump
     chown system radio /sys/kernel/modem_nvram/clear
     chown system radio /sys/kernel/modem_nvram/size
 
 #  Permissions for RapidRIL Repository
-    chmod 0770 /system/etc/rril
-    chown radio radio /system/etc/rril
-
-    chmod 0664  /system/etc/rril/repository.txt
-    chown radio radio /system/etc/rril/repository.txt
     chmod 0775 sys/devices/pci0000:00/0000:00:02.3/hsm
 
 on post-fs-data
+# Activate RPS for rmnetX devices
+    write /sys/class/net/rmnet0/queues/rx-0/rps_cpus F
+    write /sys/class/net/rmnet1/queues/rx-0/rps_cpus F
+    write /sys/class/net/rmnet2/queues/rx-0/rps_cpus F
+    write /sys/class/net/rmnet3/queues/rx-0/rps_cpus F
+    write /sys/class/net/rmnet4/queues/rx-0/rps_cpus F
 
+# create NVM log folder
     mkdir /data/modem
     chown system radio /data/modem
     chmod 770 /data/modem
@@ -46,17 +47,13 @@ on post-fs-data
     chown system radio /config/telephony
     chmod 770 /config/telephony
 
+# create asus config modem FW folder
+    mkdir /config/modem 0770 system radio
+
 # create cache modem firmware folder
     mkdir /cache/telephony
     chown system radio /cache/telephony
     chmod 770 /cache/telephony
-
-# adding Telephony
-service mmgr /system/bin/mmgr
-    class late_start
-    socket mmgr stream 660 system radio
-    user system
-    group radio cache inet misc system usb
 
 # adding nvm manager
 service nvmmanager /system/bin/nvm_server
@@ -64,31 +61,13 @@ service nvmmanager /system/bin/nvm_server
     socket nvm-ctl stream 660 system radio
     user system
     group radio cache inet misc system
-    # TODO: Label these properly
+    seclabel u:r:nvm_server:s0
 
-# adding 2nd nvm manager for DSDA
-service ril-daemon /system/bin/rild
-    class late_start
-    socket rild stream 660 root radio
-    socket sap_uim_socket1 stream 660 bluetooth bluetooth
-    socket rild-debug stream 660 radio system
-    user root
-    group radio cache inet misc audio log qcom_diag readproc wakelock
+# MMGR (Modem Manager)
+service mmgr  /system/bin/mmgr
+    class main
+    socket mmgr stream 660 system radio
+    user system
+    group radio cache inet misc system
+    onrestart restart ril-daemon
 
-
-on property:persist.disable_NVM_Server=1
-    stop nvmmanager
-
-# Activate RPS for usbX devices
-on property:sys.usb.modemevt=1
-   setprop sys.usb.modemevt 0
-   wait /sys/class/net/usb0/queues/rx-0/rps_cpus 1
-   write /sys/class/net/usb0/queues/rx-0/rps_cpus F
-   wait /sys/class/net/usb1/queues/rx-0/rps_cpus 1
-   write /sys/class/net/usb1/queues/rx-0/rps_cpus F
-   wait /sys/class/net/usb2/queues/rx-0/rps_cpus 1
-   write /sys/class/net/usb2/queues/rx-0/rps_cpus F
-   wait /sys/class/net/usb3/queues/rx-0/rps_cpus 1
-   write /sys/class/net/usb3/queues/rx-0/rps_cpus F
-   wait /sys/class/net/usb4/queues/rx-0/rps_cpus 1
-   write /sys/class/net/usb4/queues/rx-0/rps_cpus F

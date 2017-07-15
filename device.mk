@@ -180,25 +180,21 @@ PRODUCT_PACKAGES += \
     init.asus.rc \
     init.bt.rc \
     init.bt.vendor.rc \
-    init.class_main.sh \
     init.common.rc \
     init.debug.rc \
     init.diag.rc \
     init.gps.rc \
-    init.logtool.rc \
     init.modem.rc \
     init.redhookbay.rc \
     init.platform.usb.rc \
+    init.platform.gfx.rc \
     init.power.redhookbay.rc \
     init.product.rc \
     init.recovery.redhookbay.rc \
     init.watchdog.rc \
     init.wifi.rc \
     init.wifi.vendor.rc \
-    init.zram.rc \
-    thermald \
     ueventd.redhookbay.rc \
-    init.compass.rc \
     init.wireless.rc
 
 # Stlport
