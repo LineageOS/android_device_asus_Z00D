@@ -3,11 +3,12 @@
 #****************************************************************#
 on init
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/bin
+
     mkdir /asdf 0771 system system
     mkdir /ADF 0775 system system
 
-    chmod 0775 /factory    
-
+    chmod 0775 /factory
+	
 on post-fs-data
 # mount factory
     wait /dev/block/by-name/factory
@@ -25,7 +26,7 @@ on post-fs-data
     mount ext4 /dev/block/by-name/ADF /ADF nosuid nodev barrier=1 noauto_da_alloc
     chmod 0775 /ADF
     chown system system /ADF
-    restorecon_recursive /ADF
+    restorecon_recursive_force /ADF
 
 # mount asusfw
     wait /dev/block/by-name/asusfw
@@ -34,14 +35,15 @@ on post-fs-data
     chmod 0775 /asusfw
     chown shell shell /asusfw
     restorecon_recursive /asusfw
-    restorecon_recursive /asusfw/modem
 
+#ASUS_BSP David "[BAT]add BMMI interface for ATD"
     symlink /proc/driver/charger_limit_enable /data/data/charger_limit_enable
     symlink /proc/driver/chargerIC_status /data/data/chargerIC_status
     symlink /proc/driver/gaugeIC_status /data/data/gaugeIC_status
     symlink /sys/class/power_supply/battery/capacity /data/data/battery_status
     symlink /proc/driver/battery_soh /data/data/battery_soh
 
+#ASUS_BSP+++ Deeo LED 
     chmod 0664 /sys/class/leds/asus_led/brightness
     chown system system /sys/class/leds/asus_led/brightness
     chown system system /sys/class/leds/asus_led/blink
@@ -49,32 +51,34 @@ on post-fs-data
     chown system system /sys/class/leds/asus_led/ledCTRL
     chmod 0664 /sys/class/leds/asus_led/trigger
     chown system system /sys/class/leds/asus_led/trigger
+#ASUS_BSP--- Deeo LED
 
-    symlink /sys/bus/i2c/devices/0-0038/ftinitstatus /data/data/touch_status
-    chmod 0777 /data/data/Touch_status
-    symlink /sys/bus/i2c/devices/0-0038/update_progress /data/touch_update_progress
-    chmod 0777 /data/touch_update_progress
-    chown system system /sys/bus/i2c/devices/0-0038/ftsfwupgradeapp
-    chown system system /sys/bus/i2c/devices/0-0038/ftstpfwver
-    chown system system /sys/bus/i2c/devices/0-0038/ftstprwreg
-    chown system system /sys/bus/i2c/devices/0-0038/tp_fw_info
-    chown system system /sys/bus/i2c/devices/0-0038/ftresetic
-    chown system system /sys/bus/i2c/devices/0-0038/glove_mode
-    chown system system /sys/bus/i2c/devices/0-0038/gesture_mode
-    chown system system /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0038/gesture_mode
-    chown system system /sys/bus/i2c/devices/0-0038/dclick_mode
-    chown system system /sys/bus/i2c/devices/0-0038/keypad_mode
-    chmod 0664 /sys/bus/i2c/devices/0-0038/glove_mode
-    chmod 0664 /sys/bus/i2c/devices/0-0038/gesture_mode
-    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0038/gesture_mode
-    chmod 0664 /sys/bus/i2c/devices/0-0038/keypad_mode
-    chown system system /sys/android_touch/ftsfwupgradeapp
+# ASUS_BSP +++ Gavin_Chang "storage info for AMAX"
+    symlink /storage/MicroSD /Removable/MicroSD
+    symlink /sys/devices/pci0000:00/0000:00:01.0/mmc_host/mmc0/mmc0:0001/emmc_total_size /data/data/emmc_total_size
+    chmod 0777 /data/data/emmc_total_size
+# ASUS_BSP --- Gavin_Chang "storage info for AMAX"
+
+# ASUS jacob add for BMMI test and AP check update progress
+	symlink /sys/bus/i2c/devices/0-0038/ftinitstatus /data/data/touch_status
+	chmod 0777 /data/data/Touch_status
+	symlink /sys/bus/i2c/devices/0-0038/update_progress /data/touch_update_progress
+	chmod 0777 /data/touch_update_progress
+	chown system system /sys/bus/i2c/devices/0-0038/ftsfwupgradeapp
+	chown system system /sys/bus/i2c/devices/0-0038/ftstpfwver
+	chown system system /sys/bus/i2c/devices/0-0038/ftstprwreg
+	chown system system /sys/bus/i2c/devices/0-0038/tp_fw_info
+	chown system system /sys/bus/i2c/devices/0-0038/ftresetic
+	chown system system /sys/bus/i2c/devices/0-0038/glove_mode
+	chown system system /sys/bus/i2c/devices/0-0038/gesture_mode
+	chown system system /sys/android_touch/ftsfwupgradeapp
 
     chown system system /sys/class/backlight/psb-bl/brightness
     chmod 0664 /sys/class/backlight/psb-bl/brightness
     symlink /sys/class/backlight/psb-bl/brightness /data/data/BLTest
     chmod 777 /data/data/BLTest
 
+# ASUS_BSP +++ Peter_Lu "Akm09911 compass sensor & KXTJ9 Gsensor"
     #  Permissions for Sensors
     # accelerometer kxtj9
     chown system system /sys/bus/i2c/devices/5-000f/enable
@@ -106,4 +110,12 @@ on post-fs-data
     chmod 0774 /sys/devices/virtual/compass/akm09911/akm_i2c
     chmod 0774 /sys/bus/i2c/devices/5-000f/kxtj9_raw
     chmod 0774 /sys/bus/i2c/devices/5-000f/kxtj9_status
+
+    # adding Ecompass service
+service akmd  /system/bin/akmd09911 -m 3
+    class core
+    user system
+    group system misc input
+    seclabel u:r:asus_compass_server:s0
+    oneshot
 

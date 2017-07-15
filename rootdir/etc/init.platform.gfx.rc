@@ -1,0 +1,21 @@
+on boot
+    # IMG Graphics specific setup. See also "service pvrsrvctl"
+    # The permissions below should be tighter.
+    chown system system /sys/class/backlight/psb-bl/brightness
+    chown system system /sys/class/backlight/psb-bl/max_brightness
+    chown system system /sys/class/backlight/psb-bl/actual_brightness
+    chmod 0664 /sys/class/backlight/psb-bl/brightness
+    chmod 0664 /sys/class/backlight/psb-bl/max_brightness
+    chmod 0664 /sys/class/backlight/psb-bl/actual_brightness
+
+on charger
+    # IMG Graphics specific setup. See also "service pvrsrvctl"
+    start pvrsrvctl
+    # reduce backlight
+    write /sys/class/backlight/psb-bl/brightness 50
+
+service pvrsrvctl /system/vendor/bin/pvrsrvctl --no-module --start
+    class core
+    oneshot
+    user root
+

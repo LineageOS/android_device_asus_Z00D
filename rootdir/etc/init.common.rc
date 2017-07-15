@@ -1,6 +1,9 @@
 import /init.watchdog.rc
 import /init.firmware.rc
+import /init.intel.feature.asf.rc
+import /init.ksm.rc
 import /init.power.redhookbay.rc
+import /init.readahead.rc
 import /init.zram.rc
 
 on early-init
@@ -28,11 +31,9 @@ on boot
 
     # IMG Graphics specific setup. See also "service pvrsrvctl"
     # The permissions below should be tighter.
-    chown system system /sys/class/backlight/psb-bl/brightness
     chown system system /sys/class/backlight/psb-bl/max_brightness
     chown system system /sys/class/backlight/psb-bl/actual_brightness
 
-    chmod 0664 /sys/class/backlight/psb-bl/brightness
     chmod 0664 /sys/class/backlight/psb-bl/max_brightness
     chmod 0664 /sys/class/backlight/psb-bl/actual_brightness
 
@@ -42,14 +43,11 @@ on boot
 
 # Change TCP Net-Core buffers sizes to improve cellular data throughput
      write /proc/sys/net/core/rmem_default 1048576
-     write /proc/sys/net/core/rmem_max 2097152
-     write /proc/sys/net/core/wmem_max 1048576
+     write /proc/sys/net/core/rmem_max 2560000
+     write /proc/sys/net/core/wmem_max 2097152
 
     #Set freezing timeout value as 2000ms
     write /sys/power/pm_freeze_timeout 2000
-
-    #enable kernel compaction
-    write /proc/sys/vm/compact_memory 1
 
 on fs
     mkdir /factory 0775 system system
@@ -57,8 +55,6 @@ on fs
     mkdir /config 0775 system system
     mkdir /media 0775 media media
     mount_all /fstab.redhookbay
-    chown root system /factory
-    chmod 0770 /factory
     mkdir /config/wifi
     chown system wifi /config/wifi
     chmod 0770 /config/wifi
@@ -69,6 +65,18 @@ on fs
     restorecon_recursive /config
     restorecon_recursive /factory
     restorecon_recursive /logs
+
+on post-fs
+
+# Performance tweaks for interactive governor
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/touchboostpulse
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/touchboostpulse_duration
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/touchboost_freq
+    chmod 0220 /sys/devices/system/cpu/cpufreq/interactive/touchboostpulse
+    chmod 0220 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
 
 on post-fs-data
     mkdir /data/system/ 0770 system system
@@ -81,6 +89,9 @@ on post-fs-data
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
+
+    # Set this property to force the camera shutter sound to play on speaker
+    setprop ro.camera.sound.forced 0
 
     # Set this property to avoid fm rx to be muted
     setprop ro.fmrx.sound.forced 1
@@ -96,16 +107,27 @@ on post-fs-data
     setprop persist.thermal.display.msg 1
     setprop persist.thermal.display.vibra 1
 
+    #Properties for ota_budget
     setprop persist.selective.ota_budget 1800000
-
-    # Set this property for the use of unlock
-    setprop ro.build.servaddr 1
 
     chown system system /sys/class/drm/card0/gt_max_freq_mhz
 
-    #support emmc_total_size
-    symlink /sys/devices/pci0000:00/0000:00:01.0/emmc_total_size /data/data/emmc_total_size
+    # Collect panic data systematically
+    copy /proc/emmc_ipanic_header /data/dontpanic/emmc_ipanic_header
+    chown root log /data/dontpanic/emmc_ipanic_header
+    chmod 0640 /data/dontpanic/emmc_ipanic_header
 
+    copy /proc/emmc_ipanic_console /data/dontpanic/emmc_ipanic_console
+    chown root log /data/dontpanic/emmc_ipanic_console
+    chmod 0640 /data/dontpanic/emmc_ipanic_console
+
+    copy /proc/emmc_ipanic_threads /data/dontpanic/emmc_ipanic_threads
+    chown root log /data/dontpanic/emmc_ipanic_threads
+    chmod 0640 /data/dontpanic/emmc_ipanic_threads
+
+    copy /proc/emmc_ipanic_gbuffer /data/dontpanic/emmc_ipanic_gbuffer
+    chown root log /data/dontpanic/emmc_ipanic_gbuffer
+    chmod 0640 /data/dontpanic/emmc_ipanic_gbuffer
 
 on property:sys.boot_completed=1
     start bcu_cpufreqrel
@@ -116,13 +138,9 @@ on charger
     chmod 0666 /dev/dri/card0
     symlink /dev/dri/card0 /dev/card0
 
-    # IMG Graphics specific setup. See also "service pvrsrvctl"
     # The permissions below should be tighter.
     chown system system /dev/card0
 
-    start pvrsrvctl
-    # reduce backlight
-    write /sys/class/backlight/psb-bl/brightness 50
     #default setting to enable charging in COS
     setprop sys.usb.config charging
 
@@ -140,11 +158,6 @@ service bcu_cpufreqrel /system/bin/bcu_cpufreqrel
     group system
     oneshot
     disabled
-
-service pvrsrvctl /system/vendor/bin/pvrsrvctl --no-module --start
-    class core
-    oneshot
-    user root
 
 service charger_app /charger
     class charger
@@ -186,3 +199,4 @@ on property:sys.shutdown.requested=1recovery
 
 on property:sys.shutdown.requested=1bootloader
     write /sys/devices/virtual/misc/watchdog/reboot_ongoing 1
+
