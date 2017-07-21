@@ -268,6 +268,7 @@ vendor/firmware/01s5k8aay.drvb
 lib/libkeymaster.so
 lib/libdrmdecrypt.so
 lib/hw/keystore.clovertrail.so:lib/hw/keystore.vendor.clovertrail.so
+lib/libcrypto.so:lib/libstock_crypto.so
 vendor/lib/drm/libdrmwvmplugin.so
 vendor/lib/mediadrm/libwvdrmengine.so
 vendor/lib/libwvdrm_L1.so
@@ -293,11 +294,6 @@ vendor/lib/egl/libGLESv2_POWERVR_SGX544_115.so
 vendor/lib/hw/gralloc.redhookbay.so
 vendor/lib/hw/memtrack.redhookbay.so
 
-bin/bcu_cpufreqrel
-bin/fg_conf
-bin/nvm_server
-bin/mmgr
-
 # Firmware
 etc/firmware/aac_dec_1.bin
 etc/firmware/fw_sst_08e7.bin
@@ -322,7 +318,7 @@ lib/libhoudini.so
 # Media
 bin/msvdx_bin
 bin/topaz_bin
-lib/hw/hwcomposer.clovertrail.so
+lib/hw/hwcomposer.clovertrail.so|0e02b5bd86cd2947dff347c4068ae753
 lib/libhwcwidi.so
 lib/libintelmetadatabuffer.so
 lib/libmdp_omx_core.so
@@ -335,6 +331,14 @@ lib/libOMXVideoDecoderAVC.so
 lib/libOMXVideoDecoderAVCSecure.so
 lib/libmultidisplay.so
 lib/libsepdrm.so
+
+# Misc binaries
+bin/bcu_cpufreqrel
+bin/fg_conf
+bin/mmgr
+bin/nvm_server
+-bin/thermald
+-bin/upi_ug31xx
 
 # Radio
 lib/libmmgrcli.so
