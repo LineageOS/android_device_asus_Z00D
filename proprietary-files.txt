@@ -1,3 +1,13 @@
+# Reversed from existing makefiles; needs resolving
+bin/thermald
+-bin/thermald
+bin/upi_ug31xx
+-bin/upi_ug31xx
+lib/libstock_crypto.so
+etc/firmware/bcmdhd_aob.cal
+etc/firmware/fw_bcmdhd.bin
+etc/firmware/fw_bcmdhd_apsta.bin
+
 # Configuration files
 
 # Arm blobs
