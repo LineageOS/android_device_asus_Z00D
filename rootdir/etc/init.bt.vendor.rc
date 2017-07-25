@@ -9,8 +9,10 @@ on post-fs
     mkdir /config/bt
     chown system bluetooth /config/bt
     chmod 0770 /config/bt
-    setprop ro.bt.bdaddr_path "/config/bt/bd_addr.conf"
+    chown bluetooth net_bt_stack /dev/ttyMFD0
+    chmod 0660 /dev/ttyMFD0
+    setprop ro.bt.bdaddr_path "/factory/bd_addr.conf"
     start bd_prov
 
 on early-boot
-    chmod 0644 /config/bt/bd_addr.conf
+    chmod 0644 /factory/bd_addr.conf
