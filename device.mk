@@ -71,6 +71,11 @@ PRODUCT_PACKAGES += \
     pvr_drv_video \
     libgbf
 
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.mapper@2.0-impl
+
 # GPS
 #PRODUCT_PACKAGES += \
 #    libshim_gps
@@ -288,6 +293,10 @@ $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version = 131072
+
+# Vendor Interface Manifest
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/manifest.xml:system/vendor/manifest.xml
 
 # hardware optimizations
 #PRODUCT_PROPERTY_OVERRIDES += \
