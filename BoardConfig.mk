@@ -48,7 +48,7 @@ TARGET_KERNEL_ARCH := x86
 BOARD_KERNEL_IMAGE_NAME := bzImage
 TARGET_KERNEL_CONFIG := lineageos_Z00D_defconfig
 
-BOARD_KERNEL_CMDLINE := init=/init pci=noearly console=ttyS0 console=logk0 earlyprintk=nologger bootup.uart=0 loglevel=8 kmemleak=off androidboot.bootmedia=sdcard androidboot.hardware=redhookbay watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxxx:xxxx:xxxx androidboot.serialno=01234567890123456789 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on vmalloc=172M
+BOARD_KERNEL_CMDLINE := init=/init pci=noearly console=ttyS0 console=logk0 earlyprintk=nologger bootup.uart=0 loglevel=8 kmemleak=off androidboot.bootmedia=sdcard androidboot.hardware=redhookbay watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxxx:xxxx:xxxx androidboot.serialno=01234567890123456789 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on vmalloc=172M androidboot.selinux=permissive
 
 TARGET_RECOVERY_UPDATER_LIBS += libosip_updater
 TARGET_RECOVERY_UPDATER_EXTRA_LIBS += libintel_updater liboempartitioning_static
@@ -74,10 +74,6 @@ INTEL_VIDEO_XPROC_SHARING := true
 BOARD_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
 TARGET_PROVIDES_CAMERA_HAL := true
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
-
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    media.stagefright.legacyencoder=true \
-    media.stagefright.less-secure=true
 
 # Charger
 WITH_CM_CHARGER := false
@@ -116,9 +112,6 @@ SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 # Opengles
 BOARD_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH -DWORKAROUND_BUG_10194508
 BOARD_EGL_CFG := device/asus/Z00D/configs/egl.cfg
-
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.opengles.version = 131072
 
 INTEL_VA := true
 BUILD_WITH_FULL_STAGEFRIGHT := true
