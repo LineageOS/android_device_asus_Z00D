@@ -25,7 +25,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dex2oat-swap=false
 
 # Asus properties
-ADDITIONAL_DEFAULT_PROPERTIES += \
+PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.asus.sku=WW
 
 # Audio
@@ -52,7 +52,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Camera
 PRODUCT_PACKAGES += \
     bspcapability \
-    camera.redhookbay \
+#    camera.redhookbay \
     libshim_camera \
     Snap
 
@@ -72,8 +72,8 @@ PRODUCT_PACKAGES += \
     libgbf
 
 # GPS
-PRODUCT_PACKAGES += \
-    libshim_gps
+#PRODUCT_PACKAGES += \
+#    libshim_gps
 
 PRODUCT_COPY_FILES += \
     device/asus/Z00D/configs/gps.conf:system/etc/gps.conf \
@@ -94,7 +94,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.enable.native.bridge.exec=1
 
-ADDITIONAL_DEFAULT_PROPERTIES += ro.dalvik.vm.native.bridge=libhoudini.so
+PRODUCT_PROPERTY_OVERRIDES += ro.dalvik.vm.native.bridge=libhoudini.so
 
 # Key layout files
 PRODUCT_COPY_FILES += \
@@ -274,12 +274,6 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=320
 
-# Ramdisk config of governors
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.sys.perf.device.powersave=933000 \
-    ro.sys.perf.device.full=1600000 \
-    ro.sys.perf.device.touchboost=1333000
-
 # Alsa
 PRODUCT_PACKAGES += \
     tinyplay \
@@ -291,6 +285,9 @@ PRODUCT_COPY_FILES += \
 
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.opengles.version = 131072
 
 # hardware optimizations
 #PRODUCT_PROPERTY_OVERRIDES += \
