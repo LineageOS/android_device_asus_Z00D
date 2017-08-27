@@ -57,6 +57,7 @@ service mmgr /system/bin/mmgr
     socket mmgr stream 660 system radio
     user system
     group radio cache inet misc system usb
+    onrestart restart ril-daemon
 
 # adding nvm manager
 service nvmmanager /system/bin/nvm_server
@@ -65,13 +66,6 @@ service nvmmanager /system/bin/nvm_server
     user system
     group radio cache inet misc system
     # TODO: Label these properly
-
-# adding 2nd nvm manager for DSDA
-service ril-daemon /vendor/bin/hw/rild
-    class late_start
-    user radio
-    group radio cache inet misc audio log readproc wakelock
-    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
 on property:persist.disable_NVM_Server=1
     stop nvmmanager
