@@ -59,9 +59,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Camera
 PRODUCT_PACKAGES += \
     bspcapability \
-#    camera.redhookbay \
+    android.hardware.camera.provider@2.4-impl \
+    camera.device@3.2-impl \
+    camera.redhookbay \
     libshim_camera \
     Snap
+
+# Camera props
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
 
 # Charger
 PRODUCT_PACKAGES += \
