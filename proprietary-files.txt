@@ -327,7 +327,6 @@ lib/libmixvbp_h264.so
 lib/libmixvbp_h264secure.so
 lib/libmixvbp_mpeg4.so
 lib/libmixvbp_vc1.so
-lib/libOMXVideoDecoderAVC.so
 lib/libOMXVideoDecoderAVCSecure.so
 lib/libmultidisplay.so
 lib/libsepdrm.so
