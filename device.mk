@@ -56,6 +56,10 @@ PRODUCT_PACKAGES += \
     libshim_camera \
     Snap
 
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
+
 # Charger
 PRODUCT_PACKAGES += \
     charger \
@@ -273,6 +277,9 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=320
+
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.opengles.version = 131072
 
 # Ramdisk config of governors
 ADDITIONAL_DEFAULT_PROPERTIES += \
