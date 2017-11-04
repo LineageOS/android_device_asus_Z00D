@@ -14,9 +14,6 @@
 # limitations under the License.
 #
 
-# call dalvik heap config
-$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
-
 DEVICE_PACKAGE_OVERLAYS := \
     device/asus/Z00D/overlay
 
@@ -68,7 +65,13 @@ PRODUCT_PACKAGES += \
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.dalvik.vm.isa.arm=x86 \
-    dalvik.vm.implicit_checks=none
+    dalvik.vm.implicit_checks=none \
+    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heapgrowthlimit=128m \
+    dalvik.vm.heapsize=174m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=512k \
+    dalvik.vm.heapmaxfree=8m
 
 # Display
 PRODUCT_PACKAGES += \
