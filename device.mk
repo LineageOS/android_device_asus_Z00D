@@ -296,9 +296,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/asus/Z00D/audio/silence.wav:system/etc/silence.wav
 
-# Add WiFi Firmware
-$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
-
 # hardware optimizations
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    dalvik.vm.isa.x86.features=sse4_2,aes_in,popcnt,movbe
