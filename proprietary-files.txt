@@ -452,8 +452,3 @@ lib/hw/sensors.AKM.redhookbay.so
 lib/hw/sensors.PS_ALS.redhookbay.so
 lib/libcmdthread.so
 
-# Wi-Fi
-vendor/firmware/fw_bcmdhd_apsta.bin
-vendor/firmware/fw_bcmdhd.bin
-etc/wifi/bcmdhd.cal
-
