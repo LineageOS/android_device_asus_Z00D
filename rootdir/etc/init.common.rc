@@ -57,6 +57,8 @@ on fs
     mkdir /config 0775 system system
     mkdir /media 0775 media media
     mount_all /fstab.redhookbay
+    swapon_all /fstab.redhookbay
+
     chown root system /factory
     chmod 0770 /factory
     mkdir /config/wifi
