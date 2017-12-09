@@ -318,20 +318,6 @@
     -->
     <bool name="config_enableWifiDisplay">true</bool>
 
-    <!-- Set to true if the wifi display supports compositing content stored
-         in gralloc protected buffers.  For this to be true, there must exist
-         a protected hardware path for surface flinger to composite and send
-         protected buffers to the wifi display video encoder.
-
-         If this flag is false, we advise applications not to use protected
-         buffers (if possible) when presenting content to a wifi display because
-         the content may be blanked.
-
-         This flag controls whether the {@link Display#FLAG_SUPPORTS_PROTECTED_BUFFERS}
-         flag is set for wifi displays.
-    -->
-    <bool name="config_wifiDisplaySupportsProtectedBuffers">true</bool>
-
     <!-- Indicate whether the SD card is accessible without removing the battery. -->
     <bool name="config_batterySdCardAccessibility">true</bool>
 
@@ -346,10 +332,6 @@
 
     <!-- Disables Button backlight settings -->
     <integer name="config_buttonBrightnessSettingDefault">0</integer>
-
-    <!-- Performance profiles -->
-    <!-- string name="config_perf_profile_prop">sys.perf.profile</string -->
-    <!-- string name="config_perf_profile_default_entry">1</string -->
 
     <!-- Whether device supports double tap to wake -->
     <bool name="config_supportDoubleTapWake">true</bool>
@@ -370,7 +352,7 @@
 
     <!-- Flag indicating whether radio is to be restarted on the error of
          PDP_FAIL_REGULAR_DEACTIVATION/0x24 -->
-    <bool name="config_restart_radio_on_pdp_fail_regular_deactivation">true</bool>
+    <bool name="config_restart_radio_on_pdp_fail_regular_deactivation">false</bool>
 
     <!-- ComponentName of a dream to show whenever the system would otherwise have
          gone to sleep.  When the PowerManager is asked to go to sleep, it will instead
