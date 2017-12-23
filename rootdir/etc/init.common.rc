@@ -48,9 +48,6 @@ on boot
     #Set freezing timeout value as 2000ms
     write /sys/power/pm_freeze_timeout 2000
 
-    #enable kernel compaction
-    write /proc/sys/vm/compact_memory 1
-
 on fs
     mkdir /factory 0775 system system
     mkdir /asusfw 0660 root shell
