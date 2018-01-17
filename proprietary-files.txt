@@ -347,8 +347,8 @@ lib/libmmgr_utils.so
 lib/libmodemupdate.so
 lib/libmodem-audio-collection.so
 lib/libtcs.so
-lib/librapid-ril-core.so
-lib/librapid-ril-util.so
+lib/librapid-ril-core.so|c5b7cfc560b7097c4a8c1b1349d1c41e98783f29
+lib/librapid-ril-util.so|f4721f895245a467d1a8f2250238250a0f94b6f8
 
 # Radio config / firmware
 etc/parameter-framework/ParameterFrameworkConfiguration.ER.xml
