@@ -318,7 +318,7 @@ lib/libhoudini.so
 # Media
 bin/msvdx_bin
 bin/topaz_bin
-lib/hw/hwcomposer.clovertrail.so|0e02b5bd86cd2947dff347c4068ae753
+lib/hw/hwcomposer.clovertrail.so|2ae03a64f139914af7c2f3c63f10aef92d513576
 lib/libhwcwidi.so
 lib/libintelmetadatabuffer.so
 lib/libmdp_omx_core.so
