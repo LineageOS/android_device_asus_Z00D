@@ -178,7 +178,6 @@ vendor/etc/route_criteria.conf
 # Bluetooth
 bin/bd_prov
 etc/firmware/BCM4343A0_001.001.034.0056.0224.hcd
-vendor/lib/libbt-vendor.so
 
 # Camera
 etc/atomisp/00ar0543_raw.cpf
