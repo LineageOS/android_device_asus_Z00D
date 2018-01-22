@@ -30,7 +30,6 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-    libshim_audio \
     libtinycompress \
     libtinyalsa \
     audio.a2dp.default \
@@ -168,8 +167,7 @@ PRODUCT_PACKAGES += \
 
 # Radio
 PRODUCT_PACKAGES += \
-    libshim_mmgr \
-    libshim_tcs
+    libshim_icu
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.status.polling.enable=0 \
@@ -208,10 +206,6 @@ PRODUCT_PACKAGES += \
 # Stlport
 PRODUCT_PACKAGES += \
     libstlport
-
-# Sensors
-PRODUCT_PACKAGES += \
-    libshim_sensors
 
 PRODUCT_COPY_FILES += \
     device/asus/Z00D/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml \
